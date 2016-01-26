@@ -1,0 +1,9 @@
+.DS_Store
+
+/cordova-cli/
+/cordova-plugman/
+
+/node_modules/
+/client/www/js/vendor/
+
+/server/www/

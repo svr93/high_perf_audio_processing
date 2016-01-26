@@ -1,0 +1,27 @@
+{
+  "name": "high_perf_audio_processing",
+  "description": "",
+  "main": "server/server.js",
+  "authors": [
+    "Vladimir Shamsheev <svr93@i.ua>"
+  ],
+  "license": "ISC",
+  "moduleType": [
+    "amd",
+    "es6"
+  ],
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "client/www/js/vendor",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "backbone": "~1.2.3",
+    "requirejs": "~2.1.22"
+  }
+}

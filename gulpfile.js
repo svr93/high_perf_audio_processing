@@ -3,6 +3,8 @@
 var gulp = require('gulp');
 var babel = require('gulp-babel');
 
+const Server = require('karma').Server;
+
 gulp.task('js', function() {
 
     return gulp.src([
@@ -20,4 +22,13 @@ gulp.task('default', ['js'], function() {
             '!client/www/**/*.js'
         ])
         .pipe(gulp.dest('server/www'));
+});
+
+gulp.task('test', done => {
+
+    new Server({
+
+        configFile: `${ __dirname }/karma.conf.js`,
+        singleRun: true
+    }, () => done()).start();
 });

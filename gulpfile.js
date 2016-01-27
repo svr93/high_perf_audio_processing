@@ -9,10 +9,7 @@ gulp.task('js', function() {
             'client/www/js/**/*.js',
             '!client/www/js/vendor/*.js'
         ])
-        .pipe(babel({
-            // blacklist: ['strict'], // excluded from babel core
-            plugins: ["transform-object-assign"]
-        }))
+        .pipe(babel())
         .pipe(gulp.dest('server/www/js'));
 });
 

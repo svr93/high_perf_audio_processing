@@ -9,8 +9,23 @@
  * Max error value: 99. Min error value: 1.
  * @type {Object<string, Object<string, number> >}
  */
-const code = Object.freeze({
+const codeBase = Object.freeze({
 
+    serverResponse: Object.freeze({
+
+        EMPTY_RESPONSE: 1,
+        INCOMPATIBLE_FORMAT: 2,
+        MISSING_FIELD: 3,
+        INCORRECT_FIELD: 4,
+        BAD_REQUEST: 5
+    }),
+    inputData: Object.freeze({
+
+        MISSING_ARGUMENT: 10,
+        INCORRECT_ARGUMENT: 11,
+        DATA_TOO_BIG: 12,
+        LOW_PRECISION: 13
+    })
 });
 
 /**
@@ -20,6 +35,15 @@ const code = Object.freeze({
  */
 function getTypeCodeData(type) {
 
+    let codeObj = codeBase[type];
+    if (!codeObj) { return false; }
+
+    let res = [];
+    for (let key in codeObj) {
+
+        res.push(codeObj[key]);
+    }
+    return res;
 }
 
 /**
@@ -29,6 +53,17 @@ function getTypeCodeData(type) {
  */
 function getTypeByCode(code) {
 
+    code = +code;
+
+    for (let type in codeBase) {
+
+        let codeObj = codeBase[type];
+        for (let i in codeObj) {
+
+            if (codeObj[i] === code) { return type; }
+        }
+    }
+    return false;
 }
 
 /**
@@ -39,6 +74,15 @@ function getTypeByCode(code) {
  */
 function getCodeByStringRepresentation(str) {
 
+    for (let type in codeBase) {
+
+        let codeObj = codeBase[type];
+        for (let i in codeObj) {
+
+            if (i === str) { return codeObj[i]; }
+        }
+    }
+    return false;
 }
 
 /**
@@ -48,11 +92,22 @@ function getCodeByStringRepresentation(str) {
  */
 function getStringRepresentationByCode(code) {
 
+    code = +code;
+
+    for (let type in codeBase) {
+
+        let codeObj = codeBase[type];
+        for (let i in codeObj) {
+
+            if (codeObj[i] === code) { return i; }
+        }
+    }
+    return false;
 }
 
 export {
 
-    code,
+    codeBase as code,
     getTypeCodeData,
     getTypeByCode,
     getCodeByStringRepresentation,

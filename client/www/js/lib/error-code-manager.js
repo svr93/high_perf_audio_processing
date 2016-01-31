@@ -31,7 +31,9 @@ const codeBase = Object.freeze({
         DB_ALREADY_EXISTS: 20,
         DATA_ALREADY_EXISTS: 21,
         INCOMPATIBLE_INPUT_FORMAT: 22,
-        INCOMPATIBLE_OUTPUT_FORMAT: 23
+        INCOMPATIBLE_OUTPUT_FORMAT: 23,
+        UNKNOWN_ERROR_DELETING_DB: 24,
+        UNKNOWN_ERROR_CREATING_DB: 25
     }),
     common: Object.freeze({
 

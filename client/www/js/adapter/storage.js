@@ -1,6 +1,7 @@
 /**
  * Module for data storage.
  */
+import { indexedDB } from 'global/web-api';
 import { code } from 'lib/error-code-manager';
 
 'use strict';
@@ -63,6 +64,12 @@ IndexedDBStorageAdapter.prototype.get = function(name, options) {
 };
 
 /**
+ * Single promise for DB operation control.
+ * @type {Promise} Thenable object; resolution - {null}.
+ */
+let commonPromise = Promise.resolve(null);
+
+/**
  * Creates storage adapter.
  * Uses single promise flow.
  * @param {string} storageName
@@ -75,7 +82,25 @@ IndexedDBStorageAdapter.prototype.get = function(name, options) {
  *  statusCode: number Value 0 in case of success, error code otherwise.
  * }}
  */
-function createAdapter(storageName, options) {}
+function createAdapter(storageName, options) {
+
+    if (arguments.length === 0) {
+
+        return Promise.resolve({
+
+            adapter: null,
+            statusCode: code.inputData.MISSING_ARGUMENT
+        });
+    }
+    if (typeof storageName !== 'string' || storageName === '') {
+
+        return Promise.resolve({
+
+            adapter: null,
+            statusCode: code.inputData.INCORRECT_ARGUMENT
+        });
+    }
+}
 
 export {
 

@@ -2,7 +2,7 @@
  * Module for data storage.
  */
 import { indexedDB } from 'global/web-api';
-import { code } from 'lib/error-code-manager';
+import { getCodeByStringRepresentation } from 'lib/error-code-manager';
 
 'use strict';
 
@@ -80,25 +80,69 @@ let commonPromise = Promise.resolve(null);
  * {{
  *  adapter: ?IStorageAdapter Value {null} in case of error.
  *  statusCode: number Value 0 in case of success, error code otherwise.
+ *  errorMsg: string
  * }}
  */
 function createAdapter(storageName, options) {
 
+    options = options || {};
     if (arguments.length === 0) {
 
+        let errorMsg = 'MISSING_ARGUMENT';
         return Promise.resolve({
 
             adapter: null,
-            statusCode: code.inputData.MISSING_ARGUMENT
+            statusCode: getCodeByStringRepresentation(errorMsg),
+            errorMsg: errorMsg
         });
     }
     if (typeof storageName !== 'string' || storageName === '') {
 
+        let errorMsg = 'INCORRECT_ARGUMENT';
         return Promise.resolve({
 
             adapter: null,
-            statusCode: code.inputData.INCORRECT_ARGUMENT
+            statusCode: getCodeByStringRepresentation(errorMsg),
+            errorMsg: errorMsg
         });
+    }
+    if (options.rewrite === true) {
+
+        commonPromise = commonPromise
+            .then(() => {
+
+                let deleteRequest = indexedDB.deleteDatabase(storageName);
+                return new Promise((resolve, reject) => {
+
+                    deleteRequest.onsuccess = function() { resolve(null); };
+                    deleteRequest.onerror = function() {
+
+                        reject(new Error('UNKNOWN_ERROR_DELETING_DB'));
+                    };
+                });
+            })
+            .catch(err => {
+
+                let statusCode = getCodeByStringRepresentation(err.message);
+                if (statusCode === false) {
+
+                    statusCode = getCodeByStringRepresentation(
+                        'UNKNOWN_ERROR');
+                    return {
+
+                        adapter: null,
+                        statusCode: statusCode,
+                        errorMsg: err.message
+                    };
+                }
+                return {
+
+                    adapter: null,
+                    statusCode: statusCode,
+                    errorMsg: err.message
+                };
+            });
+        return commonPromise;
     }
 }
 

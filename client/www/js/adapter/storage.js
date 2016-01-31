@@ -124,7 +124,15 @@ function createAdapter(storageName, options) {
                 let deleteRequest = indexedDB.deleteDatabase(storageName);
                 return new Promise((resolve, reject) => {
 
-                    deleteRequest.onsuccess = function() { resolve(null); };
+                    deleteRequest.onsuccess = function() {
+
+                        resolve({
+
+                            adapter: null,
+                            statusCode: 0,
+                            errorMsg: ''
+                        });
+                    };
                     deleteRequest.onerror = function() {
 
                         reject(new Error('UNKNOWN_ERROR_DELETING_DB'));

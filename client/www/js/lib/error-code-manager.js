@@ -25,6 +25,17 @@ const codeBase = Object.freeze({
         INCORRECT_ARGUMENT: 11,
         DATA_TOO_BIG: 12,
         LOW_PRECISION: 13
+    }),
+    storage: Object.freeze({
+
+        DB_ALREADY_EXISTS: 20,
+        DATA_ALREADY_EXISTS: 21,
+        INCOMPATIBLE_INPUT_FORMAT: 22,
+        INCOMPATIBLE_OUTPUT_FORMAT: 23
+    }),
+    common: Object.freeze({
+
+        UNKNOWN_ERROR: 90
     })
 });
 

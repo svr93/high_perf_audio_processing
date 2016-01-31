@@ -139,29 +139,40 @@ function createAdapter(storageName, options) {
                     };
                 });
             })
-            .catch(err => {
-
-                let statusCode = getCodeByStringRepresentation(err.message);
-                if (statusCode === false) {
-
-                    statusCode = getCodeByStringRepresentation(
-                        'UNKNOWN_ERROR');
-                    return {
-
-                        adapter: null,
-                        statusCode: statusCode,
-                        errorMsg: err.message
-                    };
-                }
-                return {
-
-                    adapter: null,
-                    statusCode: statusCode,
-                    errorMsg: err.message
-                };
-            });
+            .catch(commonErrorHandler);
         return commonPromise;
     }
+}
+
+/**
+ * Common error handler for promise.
+ * @param {Error} err
+ * @return {{
+ *  adapter: null,
+ *  statusCode: number,
+ *  errorMsg: string
+ * }}
+ */
+function commonErrorHandler(err) {
+
+    let statusCode = getCodeByStringRepresentation(err.message);
+    if (statusCode === false) {
+
+        statusCode = getCodeByStringRepresentation(
+            'UNKNOWN_ERROR');
+        return {
+
+            adapter: null,
+            statusCode: statusCode,
+            errorMsg: err.message
+        };
+    }
+    return {
+
+        adapter: null,
+        statusCode: statusCode,
+        errorMsg: err.message
+    };
 }
 
 export {

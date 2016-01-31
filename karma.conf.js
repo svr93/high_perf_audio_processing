@@ -18,6 +18,14 @@ module.exports = function(config) {
             {
                 pattern: 'test/unit/lib/error-code-manager.js',
                 included: false
+            },
+            {
+                pattern: 'client/www/js/adapter/storage.js',
+                included: false
+            },
+            {
+                pattern: 'test/unit/adapter/storage.js',
+                included: false
             }
         ],
         preprocessors: {

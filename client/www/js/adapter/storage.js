@@ -70,6 +70,12 @@ IndexedDBStorageAdapter.prototype.get = function(name, options) {
 let commonPromise = Promise.resolve(null);
 
 /**
+ * Object with all opened databases.
+ * @type {Object<string, IDBDatabase>}
+ */
+let openedDBObj = {};
+
+/**
  * Creates storage adapter.
  * Uses single promise flow.
  * @param {string} storageName
@@ -108,6 +114,10 @@ function createAdapter(storageName, options) {
     }
     if (options.rewrite === true) {
 
+        if (openedDBObj.hasOwnProperty(storageName)) {
+
+            openedDBObj[storageName].close();
+        }
         commonPromise = commonPromise
             .then(() => {
 

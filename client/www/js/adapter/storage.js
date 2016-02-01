@@ -117,6 +117,7 @@ function createAdapter(storageName, options) {
         if (openedDBObj.hasOwnProperty(storageName)) {
 
             openedDBObj[storageName].close();
+            delete openedDBObj[storageName];
         }
         commonPromise = commonPromise
             .then(() => {

@@ -47,7 +47,10 @@ IStorageAdapter.prototype.get = function(name, options) {};
  * @constructor
  * @implements {IStorageAdapter}
  */
-function IndexedDBStorageAdapter(storageName) {}
+function IndexedDBStorageAdapter(storageName) {
+
+    this._db = openedDBObj[storageName];
+}
 
 /**
  * IStorageAdapter.prototype.set() implementation.
@@ -162,8 +165,69 @@ function createAdapter(storageName, options) {
                 });
             })
             .catch(commonErrorHandler);
-        return commonPromise;
     }
+    getAdapter(storageName);
+    return commonPromise;
+}
+
+/**
+ * Gets adapter with new or existing database.
+ * @param {string} storageName
+ */
+function getAdapter(storageName) {
+
+    let db = null;
+
+    commonPromise = commonPromise
+        .then(res => {
+
+            if (res && res.statusCode !== 0) {
+
+                throw new Error(res.errorMsg);
+            }
+            if (openedDBObj.hasOwnProperty(storageName)) {
+
+                db = openedDBObj[storageName];
+                return null;
+            }
+            let openRequest = indexedDB.open(storageName);
+            return new Promise((resolve, reject) => {
+
+                /**
+                 * Need for create DB first time (and add 'defaultStore' then).
+                 * @param {Event} evt
+                 */
+                openRequest.onupgradeneeded = function(evt) {
+
+                    db = evt.target.result;
+                    resolve(null);
+                };
+                openRequest.onsuccess = function(evt) {
+
+                    db = evt.target.result;
+                    resolve(null);
+                };
+                openRequest.onerror = function() {
+
+                    reject(new Error('DB_CONNECTION_OPEN_ERROR'));
+                };
+            });
+        })
+        .then(() => {
+
+            openedDBObj[storageName] = db;
+            if (!db.objectStoreNames.contains('defaultStore')) {
+
+                db.createObjectStore('defaultStore', { keyPath: 'key' });
+            }
+            return {
+
+                adapter: new IndexedDBStorageAdapter(storageName),
+                statusCode: 0,
+                errorMsg: ''
+            };
+        })
+        .catch(commonErrorHandler);
 }
 
 /**

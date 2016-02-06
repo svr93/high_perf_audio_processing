@@ -126,7 +126,9 @@ function createAdapter(storageName, options) {
             errorMsg: errorMsg
         });
     }
-    if (options.useOpen !== true && openedDBObj.hasOwnProperty(storageName)) {
+    if (options.rewrite !== true &&
+        options.useOpen !== true &&
+        openedDBObj.hasOwnProperty(storageName)) {
 
         let errorMsg = 'ALREADY_OPEN';
         return Promise.resolve({

@@ -33,7 +33,8 @@ const codeBase = Object.freeze({
         INCOMPATIBLE_INPUT_FORMAT: 22,
         INCOMPATIBLE_OUTPUT_FORMAT: 23,
         UNKNOWN_ERROR_DELETING_DB: 24,
-        UNKNOWN_ERROR_CREATING_DB: 25
+        UNKNOWN_ERROR_CREATING_DB: 25,
+        ALREADY_OPEN: 26
     }),
     common: Object.freeze({
 

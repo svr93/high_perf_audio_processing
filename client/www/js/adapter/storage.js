@@ -81,6 +81,7 @@ let openedDBObj = {};
  * @param {string} storageName
  * @param {{
  *  rewrite: boolean=, False by default.
+ *  useOpen: boolean=, False by default.
  * }=} options
  * @return {Promise} Thenable object; resolution -
  * {{
@@ -105,6 +106,16 @@ function createAdapter(storageName, options) {
     if (typeof storageName !== 'string' || storageName === '') {
 
         let errorMsg = 'INCORRECT_ARGUMENT';
+        return Promise.resolve({
+
+            adapter: null,
+            statusCode: getCodeByStringRepresentation(errorMsg),
+            errorMsg: errorMsg
+        });
+    }
+    if (options.useOpen !== true && openedDBObj.hasOwnProperty(storageName)) {
+
+        let errorMsg = 'ALREADY_OPEN';
         return Promise.resolve({
 
             adapter: null,

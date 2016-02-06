@@ -93,6 +93,16 @@ let openedDBObj = {};
 function createAdapter(storageName, options) {
 
     options = options || {};
+    if (arguments.length > 2) {
+
+        let errorMsg = 'TOO_MANY_ARGUMENTS';
+        return Promise.resolve({
+
+            adapter: null,
+            statusCode: getCodeByStringRepresentation(errorMsg),
+            errorMsg: errorMsg
+        });
+    }
     if (arguments.length === 0) {
 
         let errorMsg = 'MISSING_ARGUMENT';

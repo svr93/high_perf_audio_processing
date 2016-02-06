@@ -24,7 +24,8 @@ const codeBase = Object.freeze({
         MISSING_ARGUMENT: 10,
         INCORRECT_ARGUMENT: 11,
         DATA_TOO_BIG: 12,
-        LOW_PRECISION: 13
+        LOW_PRECISION: 13,
+        TOO_MANY_ARGUMENTS: 14
     }),
     storage: Object.freeze({
 

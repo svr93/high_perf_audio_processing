@@ -1,8 +1,16 @@
 /**
+ * TODO:
+ * 1) add support for 'format', 'temporary' options.
+ * 2) add 'DATA_ALREADY_EXISTS' error support.
+ */
+/**
  * Module for data storage.
  */
 import { indexedDB } from 'global/web-api';
-import { getCodeByStringRepresentation } from 'lib/error-code-manager';
+import {
+    SUCCESS_CODE,
+    getCodeByStringRepresentation
+} from 'lib/error-code-manager';
 
 'use strict';
 
@@ -22,7 +30,10 @@ function IStorageAdapter() {}
  *  rewrite: boolean=, False by default.
  * }=} options
  * @return {Promise} Thenable object; resolution -
- * {number} Status code.
+ * {{
+ *  statusCode: number,
+ *  errorMsg: string
+ * }}
  */
 IStorageAdapter.prototype.set = function(name, data, options) {};
 
@@ -36,7 +47,8 @@ IStorageAdapter.prototype.set = function(name, data, options) {};
  * {{
  *  data: {*},
  *  format: ?string, Value {null} in case of error.
- *  statusCode: number
+ *  statusCode: number,
+ *  errorMsg: string
  * }} Object with requested data.
  */
 IStorageAdapter.prototype.get = function(name, options) {};
@@ -57,6 +69,43 @@ function IndexedDBStorageAdapter(storageName) {
  */
 IndexedDBStorageAdapter.prototype.set = function(name, data, options) {
 
+    options = options || {};
+
+    let transaction = this._db.transaction(['defaultStore'], 'readwrite');
+    let store = transaction.objectStore('defaultStore');
+
+    let newStoreObj = { key: name, value: data };
+    let req = null;
+    if (options.rewrite === true) {
+
+        req = store.put(newStoreObj);
+    } else {
+
+        req = store.add(newStoreObj);
+    }
+    return new Promise((resolve, reject) => {
+
+        transaction.oncomplete = function() {
+
+            resolve({
+
+                statusCode: SUCCESS_CODE,
+                errorMsg: ''
+            });
+        };
+        transaction.onerror = function() {
+
+            reject(req.error);
+        };
+    }).catch(err => {
+
+        let errData = commonErrorHandler(err);
+        return {
+
+            statusCode: errData.statusCode,
+            errorMsg: errData.errorMsg
+        };
+    });
 };
 
 /**
@@ -64,6 +113,45 @@ IndexedDBStorageAdapter.prototype.set = function(name, data, options) {
  */
 IndexedDBStorageAdapter.prototype.get = function(name, options) {
 
+    options = options || {};
+
+    let transaction = this._db.transaction(['defaultStore'], 'readonly');
+    let store = transaction.objectStore('defaultStore');
+
+    let req = store.get(name);
+    return new Promise((resolve, reject) => {
+
+        transaction.oncomplete = function() {
+
+            let res = req.result;
+            if (!res) {
+
+                reject(new Error('DATA_NOT_FOUND'));
+                return;
+            }
+            resolve({
+
+                data: req.result.value,
+                format: Object.prototype.toString.apply(req.result.value),
+                statusCode: SUCCESS_CODE,
+                errorMsg: ''
+            });
+        };
+        transaction.onerror = function() {
+
+            reject(req.error);
+        };
+    }).catch(err => {
+
+        let errData = commonErrorHandler(err);
+        return {
+
+            data: null,
+            format: null,
+            statusCode: errData.statusCode,
+            errorMsg: errData.errorMsg
+        };
+    });
 };
 
 /**

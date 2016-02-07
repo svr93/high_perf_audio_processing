@@ -4,6 +4,8 @@
 
 'use strict';
 
+const SUCCESS_CODE = 0;
+
 /**
  * Error codes grouped by types for all application modules.
  * Max error value: 99. Min error value: 1.
@@ -36,7 +38,8 @@ const codeBase = Object.freeze({
         UNKNOWN_ERROR_DELETING_DB: 24,
         UNKNOWN_ERROR_CREATING_DB: 25,
         ALREADY_OPEN: 26,
-        DB_CONNECTION_OPEN_ERROR: 27
+        DB_CONNECTION_OPEN_ERROR: 27,
+        DATA_NOT_FOUND: 28
     }),
     common: Object.freeze({
 
@@ -123,6 +126,7 @@ function getStringRepresentationByCode(code) {
 
 export {
 
+    SUCCESS_CODE,
     codeBase as code,
     getTypeCodeData,
     getTypeByCode,

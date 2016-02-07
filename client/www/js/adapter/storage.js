@@ -290,6 +290,13 @@ function getAdapter(storageName) {
                 openRequest.onupgradeneeded = function(evt) {
 
                     db = evt.target.result;
+                    if (!db.objectStoreNames.contains('defaultStore')) {
+
+                        db.createObjectStore('defaultStore', {
+
+                            keyPath: 'key'
+                        });
+                    }
                     resolve(null);
                 };
                 openRequest.onsuccess = function(evt) {
@@ -306,10 +313,6 @@ function getAdapter(storageName) {
         .then(() => {
 
             openedDBObj[storageName] = db;
-            if (!db.objectStoreNames.contains('defaultStore')) {
-
-                db.createObjectStore('defaultStore', { keyPath: 'key' });
-            }
             return {
 
                 adapter: new IndexedDBStorageAdapter(storageName),

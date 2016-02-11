@@ -67,10 +67,18 @@ function IndexedDBStorageAdapter(storageName) {
 /**
  * IStorageAdapter.prototype.set() implementation.
  */
-IndexedDBStorageAdapter.prototype.set = function(name, data, options) {
+IndexedDBStorageAdapter.prototype.set = function fn(name, data, options) {
 
     options = options || {};
+    let checkRes = checkArgs(arguments, fn);
+    if (checkRes !== '') {
 
+        return Promise.resolve({
+
+            statusCode: getCodeByStringRepresentation(checkRes),
+            errorMsg: checkRes
+        });
+    }
     let transaction = this._db.transaction(['defaultStore'], 'readwrite');
     let store = transaction.objectStore('defaultStore');
 
@@ -111,10 +119,20 @@ IndexedDBStorageAdapter.prototype.set = function(name, data, options) {
 /**
  * IStorageAdapter.prototype.get() implementation.
  */
-IndexedDBStorageAdapter.prototype.get = function(name, options) {
+IndexedDBStorageAdapter.prototype.get = function fn(name, options) {
 
     options = options || {};
+    let checkRes = checkArgs(arguments, fn);
+    if (checkRes !== '') {
 
+        return Promise.resolve({
+
+            data: null,
+            format: null,
+            statusCode: getCodeByStringRepresentation(checkRes),
+            errorMsg: checkRes
+        });
+    }
     let transaction = this._db.transaction(['defaultStore'], 'readonly');
     let store = transaction.objectStore('defaultStore');
 
@@ -181,27 +199,17 @@ let openedDBObj = {};
  *  errorMsg: string
  * }}
  */
-function createAdapter(storageName, options) {
+let createAdapter = function fn(storageName, options) {
 
     options = options || {};
-    if (arguments.length > 2) {
+    let checkRes = checkArgs(arguments, fn);
+    if (checkRes !== '') {
 
-        let errorMsg = 'TOO_MANY_ARGUMENTS';
         return Promise.resolve({
 
             adapter: null,
-            statusCode: getCodeByStringRepresentation(errorMsg),
-            errorMsg: errorMsg
-        });
-    }
-    if (arguments.length === 0) {
-
-        let errorMsg = 'MISSING_ARGUMENT';
-        return Promise.resolve({
-
-            adapter: null,
-            statusCode: getCodeByStringRepresentation(errorMsg),
-            errorMsg: errorMsg
+            statusCode: getCodeByStringRepresentation(checkRes),
+            errorMsg: checkRes
         });
     }
     if (typeof storageName !== 'string' || storageName === '') {
@@ -258,7 +266,7 @@ function createAdapter(storageName, options) {
     }
     getAdapter(storageName);
     return commonPromise;
-}
+};
 
 /**
  * Gets adapter with new or existing database.
@@ -352,6 +360,24 @@ function commonErrorHandler(err) {
         statusCode: statusCode,
         errorMsg: err.message
     };
+}
+
+/**
+ * Checks arguments of all external functions.
+ * @param {Arguments} argData
+ * @param {function()} fn
+ */
+function checkArgs(argData, fn) {
+
+    if (argData.length > fn.length) {
+
+        return 'TOO_MANY_ARGUMENTS';
+    }
+    if (argData.length === 0) {
+
+        return 'MISSING_ARGUMENT';
+    }
+    return '';
 }
 
 export {

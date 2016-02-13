@@ -346,14 +346,7 @@ function commonErrorHandler(err) {
     let statusCode = getCodeByStringRepresentation(err.message);
     if (statusCode === false) {
 
-        statusCode = getCodeByStringRepresentation(
-            'UNKNOWN_ERROR');
-        return {
-
-            adapter: null,
-            statusCode: statusCode,
-            errorMsg: err.message
-        };
+        statusCode = getCodeByStringRepresentation('UNKNOWN_ERROR');
     }
     return {
 

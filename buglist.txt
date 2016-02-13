@@ -1,3 +1,7 @@
 1) Firefox Nightly 47.0a1 problem:
 "A mutation operation was attempted on a database
 that did not allow mutations." FIXED
+
+2) Chrome 48.0.2564.103 problem:
+"Failed to execute 'transaction' on 'IDBDatabase':
+A version change transaction is running."

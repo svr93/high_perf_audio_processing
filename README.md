@@ -10,3 +10,6 @@
 #### - IndexedDBStorageAdapter.prototype.set()
 #### - IndexedDBStorageAdapter.prototype.get()
 #### - createAdapter()
+
+## Tests
+### unit/adapter/storage.js SUCCESS (13.02.16)

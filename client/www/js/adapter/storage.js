@@ -11,6 +11,7 @@ import {
     SUCCESS_CODE,
     getCodeByStringRepresentation
 } from 'lib/error-code-manager';
+import { checkNativeType } from 'lib/util';
 
 'use strict';
 
@@ -376,6 +377,12 @@ function checkArgs(argData, fn) {
     if (argData.length === 0) {
 
         return 'MISSING_ARGUMENT';
+    }
+    let lastArgType = checkNativeType(argData[ argData.length - 1 ]);
+
+    if (argData.length === fn.length && lastArgType !== 'Object') {
+
+        return 'INCORRECT_ARGUMENT';
     }
     return '';
 }

@@ -237,14 +237,14 @@ let createAdapter = function fn(storageName, options) {
     }
     if (options.rewrite === true) {
 
-        if (openedDBObj.hasOwnProperty(storageName)) {
-
-            openedDBObj[storageName].close();
-            delete openedDBObj[storageName];
-        }
         commonPromise = commonPromise
             .then(() => {
 
+                if (openedDBObj.hasOwnProperty(storageName)) {
+
+                    openedDBObj[storageName].close();
+                    delete openedDBObj[storageName];
+                }
                 let deleteRequest = indexedDB.deleteDatabase(storageName);
                 return new Promise((resolve, reject) => {
 

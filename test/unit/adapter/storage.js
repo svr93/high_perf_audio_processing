@@ -22,16 +22,16 @@ define(['adapter/storage'], Storage => {
 
                     return res.adapter.set('a', { b: 'c' });
                 })
-                .then(statusCode => {
+                .then(res => {
 
-                    expect(statusCode).toBe(0);
+                    expect(res.statusCode).toBe(0);
                     done();
                 });
         });
 
         it('verifies successful data getting', done => {
 
-            Storage.createAdapter(TEST_DB_NAME)
+            Storage.createAdapter(TEST_DB_NAME, { useOpen: true })
                 .then(res => {
 
                     return res.adapter.get('a');

@@ -20,6 +20,14 @@ module.exports = function(config) {
                 included: false
             },
             {
+                pattern: 'client/www/js/global/web-api.js',
+                included: false
+            },
+            {
+                pattern: 'client/www/js/lib/util.js',
+                included: false
+            },
+            {
                 pattern: 'client/www/js/adapter/storage.js',
                 included: false
             },

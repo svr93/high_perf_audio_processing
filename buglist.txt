@@ -5,3 +5,6 @@ that did not allow mutations." FIXED
 2) Chrome 48.0.2564.103 problem:
 "Failed to execute 'transaction' on 'IDBDatabase':
 A version change transaction is running." FIXED
+
+3) [test] Firefox problem:
+AbortError (indexedDB.open() call)

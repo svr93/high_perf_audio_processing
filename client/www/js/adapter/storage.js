@@ -309,7 +309,14 @@ function getAdapter(storageName) {
                     let transaction = evt.target.transaction;
                     transaction.oncomplete = function() {
 
-                        resolve(null);
+                        openRequest.onsuccess = function() {
+
+                            resolve(null);
+                        };
+                        openRequest.onerror = function() {
+
+                            reject(new Error('DB_CONNECTION_OPEN_ERROR'));
+                        };
                     };
                     transaction.onerror = function() {
 

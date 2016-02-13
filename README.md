@@ -12,4 +12,5 @@
 #### - createAdapter()
 
 ## Tests
-### unit/adapter/storage.js SUCCESS (13.02.16)
+### unit/adapter/storage.js CHROME SUCCESS (13.02.16)
+### unit/adapter/storage.js FIREFOX SUCCESS (13.02.16)

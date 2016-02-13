@@ -7,4 +7,4 @@ that did not allow mutations." FIXED
 A version change transaction is running." FIXED
 
 3) [test] Firefox problem:
-AbortError (indexedDB.open() call)
+AbortError (indexedDB.open() call) FIXED

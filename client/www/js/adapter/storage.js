@@ -306,7 +306,15 @@ function getAdapter(storageName) {
                             keyPath: 'key'
                         });
                     }
-                    resolve(null);
+                    let transaction = evt.target.transaction;
+                    transaction.oncomplete = function() {
+
+                        resolve(null);
+                    };
+                    transaction.onerror = function() {
+
+                        reject(new Error('UNKNOWN_ERROR_TRANSACTION'));
+                    };
                 };
                 openRequest.onsuccess = function(evt) {
 

@@ -39,7 +39,8 @@ const codeBase = Object.freeze({
         UNKNOWN_ERROR_CREATING_DB: 25,
         ALREADY_OPEN: 26,
         DB_CONNECTION_OPEN_ERROR: 27,
-        DATA_NOT_FOUND: 28
+        DATA_NOT_FOUND: 28,
+        UNKNOWN_ERROR_TRANSACTION: 29
     }),
     common: Object.freeze({
 

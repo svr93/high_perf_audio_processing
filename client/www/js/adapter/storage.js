@@ -92,20 +92,25 @@ IndexedDBStorageAdapter.prototype.set = function fn(name, data, options) {
 
         req = store.add(newStoreObj);
     }
+    let dbName = this._db.name;
+    addTransaction(dbName, transaction);
+
     return new Promise((resolve, reject) => {
 
-        transaction.oncomplete = function() {
+        transaction.addEventListener('complete', () => {
 
+            deleteTransaction(dbName, transaction);
             resolve({
 
                 statusCode: SUCCESS_CODE,
                 errorMsg: ''
             });
-        };
-        transaction.onerror = function() {
+        });
+        transaction.addEventListener('error', () => {
 
+            deleteTransaction(dbName, transaction);
             reject(req.error);
-        };
+        });
     }).catch(err => {
 
         let errData = commonErrorHandler(err);
@@ -138,10 +143,14 @@ IndexedDBStorageAdapter.prototype.get = function fn(name, options) {
     let store = transaction.objectStore('defaultStore');
 
     let req = store.get(name);
+
+    let dbName = this._db.name;
+    addTransaction(dbName, transaction);
     return new Promise((resolve, reject) => {
 
-        transaction.oncomplete = function() {
+        transaction.addEventListener('complete', () => {
 
+            deleteTransaction(dbName, transaction);
             let res = req.result;
             if (!res) {
 
@@ -155,11 +164,12 @@ IndexedDBStorageAdapter.prototype.get = function fn(name, options) {
                 statusCode: SUCCESS_CODE,
                 errorMsg: ''
             });
-        };
-        transaction.onerror = function() {
+        });
+        transaction.addEventListener('error', () => {
 
+            deleteTransaction(dbName, transaction);
             reject(req.error);
-        };
+        });
     }).catch(err => {
 
         let errData = commonErrorHandler(err);
@@ -184,6 +194,12 @@ let commonPromise = Promise.resolve(null);
  * @type {Object<string, IDBDatabase>}
  */
 let openedDBObj = {};
+
+/**
+ * Object contains lists with all active transactions.
+ * @type {Object<string, Set>}
+ */
+let transactionObj = {};
 
 /**
  * Creates storage adapter.
@@ -242,9 +258,22 @@ let createAdapter = function fn(storageName, options) {
 
                 if (openedDBObj.hasOwnProperty(storageName)) {
 
+                    let promiseList = [];
+                    transactionObj[storageName].forEach(item => {
+
+                        let promise = getTransactionDonePromise(item);
+                        promiseList.push(promise);
+                    });
                     openedDBObj[storageName].close();
                     delete openedDBObj[storageName];
+                    delete transactionObj[storageName];
+
+                    return Promise.all(promiseList);
                 }
+                return null;
+            })
+            .then(() => {
+
                 let deleteRequest = indexedDB.deleteDatabase(storageName);
                 return new Promise((resolve, reject) => {
 
@@ -337,6 +366,7 @@ function getAdapter(storageName) {
         .then(() => {
 
             openedDBObj[storageName] = db;
+            transactionObj[storageName] = new Set();
             return {
 
                 adapter: new IndexedDBStorageAdapter(storageName),
@@ -393,6 +423,56 @@ function checkArgs(argData, fn) {
         return 'INCORRECT_ARGUMENT';
     }
     return '';
+}
+
+/**
+ * Puts transaction to active transaction list.
+ * @param {string} storageName
+ * @param {IDBTransaction} transaction
+ */
+function addTransaction(storageName, transaction) {
+
+    let activeTransactionSet = transactionObj[storageName];
+    if (!activeTransactionSet) {
+
+        return;
+    }
+    activeTransactionSet.add(transaction);
+}
+
+/**
+ * Removes transaction from active transaction list.
+ * @param {string} storageName
+ * @param {IDBTransaction} transaction
+ */
+function deleteTransaction(storageName, transaction) {
+
+    let activeTransactionSet = transactionObj[storageName];
+    if (!activeTransactionSet) {
+
+        return;
+    }
+    activeTransactionSet.delete(transaction);
+}
+
+/**
+ * Gets promise resolves after transaction done.
+ * @param {IDBTransaction} transaction
+ * @return {Promise}
+ */
+function getTransactionDonePromise(transaction) {
+
+    return new Promise(resolve => {
+
+        transaction.addEventListener('complete', () => {
+
+            resolve(null);
+        });
+        transaction.addEventListener('error', () => {
+
+            resolve(null);
+        });
+    });
 }
 
 export {

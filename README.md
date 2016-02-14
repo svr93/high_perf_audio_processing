@@ -14,3 +14,4 @@
 ## Tests
 ### unit/adapter/storage.js CHROME SUCCESS (13.02.16)
 ### unit/adapter/storage.js FIREFOX SUCCESS (13.02.16)
+### unit/adapter/storage.js SAFARI SUCCESS (14.02.16)

@@ -8,3 +8,6 @@ A version change transaction is running." FIXED
 
 3) [test] Firefox problem:
 AbortError (indexedDB.open() call) FIXED
+
+4) [test] Safari problem:
+"UNKNOWN_ERROR_DELETING_DB"

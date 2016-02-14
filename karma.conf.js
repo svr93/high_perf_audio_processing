@@ -4,7 +4,7 @@ module.exports = function(config) {
     config.set({
 
         frameworks: ['requirejs', 'jasmine'],
-        browsers: ['Chrome', 'Firefox'],
+        browsers: ['Chrome', 'Firefox', 'Safari'],
         files: [
 
             'test/unit/test-main.js',

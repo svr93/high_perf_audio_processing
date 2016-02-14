@@ -44,11 +44,11 @@ gulp.task('default', ['js'], function() {
         .pipe(gulp.dest('server/www'));
 });
 
-gulp.task('test', done => {
+gulp.task('test', () => {
 
     new Server({
 
         configFile: `${ __dirname }/karma.conf.js`,
         singleRun: true
-    }, () => done()).start();
+    }).start();
 });

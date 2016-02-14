@@ -1,23 +1,23 @@
-define(['lib/error-code-manager'], ErrorCodeManager => {
+define(['lib/error-code-manager'], function(ErrorCodeManager) {
     'use strict';
 
-    describe('ErrorCodeManager checker', () => {
+    describe('ErrorCodeManager checker', function() {
 
-        it('verifies error code for interval conformity', () => {
+        it('verifies error code for interval conformity', function() {
 
-            const LOW_VALUE = 0;
-            const HIGH_VALUE = 100;
+            var LOW_VALUE = 0;
+            var HIGH_VALUE = 100;
 
             var codeData = [];
-            for (let i in ErrorCodeManager.code) {
+            for (var i in ErrorCodeManager.code) {
 
-                let type = ErrorCodeManager.code[i];
-                for (let j in type) {
+                var type = ErrorCodeManager.code[i];
+                for (var j in type) {
 
                     codeData = codeData.concat(type[j]);
                 }
             }
-            codeData.forEach(item => {
+            codeData.forEach(function(item) {
 
                 expect(item).toBeGreaterThan(LOW_VALUE);
                 expect(item).toBeLessThan(HIGH_VALUE);
@@ -31,9 +31,9 @@ define(['lib/error-code-manager'], ErrorCodeManager => {
                 .toBeFalsy();
         });
 
-        it('verifies output result after incorrect input value', () => {
+        it('verifies output result after incorrect input value', function() {
 
-            const BAD_INPUT = '';
+            var BAD_INPUT = '';
 
             expect(ErrorCodeManager.getTypeCodeData(BAD_INPUT))
                 .toBeFalsy();

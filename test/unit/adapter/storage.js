@@ -1,42 +1,42 @@
-define(['adapter/storage'], Storage => {
+define(['adapter/storage'], function(Storage) {
     'use strict';
 
-    describe('StorageAdapter checker', () => {
+    describe('StorageAdapter checker', function() {
 
-        const TEST_DB_NAME = 'test_test';
+        var TEST_DB_NAME = 'test_test';
 
-        it('verifies successful DB creating', done => {
+        it('verifies successful DB creating', function(done) {
 
             Storage.createAdapter(TEST_DB_NAME, { rewrite: true })
-                .then(res => {
+                .then(function(res) {
 
                     expect(res.statusCode).toBe(0);
                     done();
                 });
         });
 
-        it('verifies successful data setting', done => {
+        it('verifies successful data setting', function(done) {
 
             Storage.createAdapter(TEST_DB_NAME, { rewrite: true })
-                .then(res => {
+                .then(function(res) {
 
                     return res.adapter.set('a', { b: 'c' });
                 })
-                .then(res => {
+                .then(function(res) {
 
                     expect(res.statusCode).toBe(0);
                     done();
                 });
         });
 
-        it('verifies successful data getting', done => {
+        it('verifies successful data getting', function(done) {
 
             Storage.createAdapter(TEST_DB_NAME, { useOpen: true })
-                .then(res => {
+                .then(function(res) {
 
                     return res.adapter.get('a');
                 })
-                .then(res => {
+                .then(function(res) {
 
                     expect(res.data.b).toBe('c');
                     done();

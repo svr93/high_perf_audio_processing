@@ -1,3 +1,7 @@
+/**
+ * TODO:
+ * 1) correct file paths.
+ */
 'use strict';
 
 var gulp = require('gulp');

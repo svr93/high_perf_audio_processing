@@ -18,3 +18,7 @@ in case of active readonly/readwrite transaction
 FIXED
 
 5) [gulp] livereload server is not working (only 17.02)
+
+6) [test]
+StorageAdapter checker verifies error data FAILED
+Expected '' to be 'ALREADY_OPEN'.

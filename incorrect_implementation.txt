@@ -1,4 +1,4 @@
 1) 'useOpen' flag check:
 In case of two consecutive requests with minimum interval
 options.useOpen param check _always_ allows use existing connection
-to the database (because check outside of Promise)
+to the database (because check outside of Promise) -> #6

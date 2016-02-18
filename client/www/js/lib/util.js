@@ -23,7 +23,18 @@ function checkNativeType(data) {
     return res.match(typeCheckRegExp)[1];
 }
 
+/**
+ * Provided by Vitaly Mahinov, 2T.
+ * @param {*} val
+ * @return {boolean}
+ */
+function isNumeric(val) {
+
+    return parseFloat(val) === val;
+}
+
 export {
 
-    checkNativeType
+    checkNativeType,
+    isNumeric
 };

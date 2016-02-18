@@ -17,6 +17,7 @@ define(['adapter/storage'], function(Storage) {
                 .catch(function(e) {
 
                     console.log(e.message);
+                    fail(e);
                 });
         });
 
@@ -37,6 +38,7 @@ define(['adapter/storage'], function(Storage) {
                 .catch(function(e) {
 
                     console.log(e.message);
+                    fail(e);
                 });
         });
 
@@ -57,6 +59,7 @@ define(['adapter/storage'], function(Storage) {
                 .catch(function(e) {
 
                     console.log(e.message);
+                    fail(e);
                 });
         });
     });

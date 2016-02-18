@@ -239,18 +239,6 @@ let createAdapter = function fn(storageName, options) {
             errorMsg: errorMsg
         });
     }
-    if (options.rewrite !== true &&
-        options.useOpen !== true &&
-        openedDBObj.hasOwnProperty(storageName)) {
-
-        let errorMsg = 'ALREADY_OPEN';
-        return Promise.resolve({
-
-            adapter: null,
-            statusCode: getCodeByStringRepresentation(errorMsg),
-            errorMsg: errorMsg
-        });
-    }
     if (options.rewrite === true) {
 
         commonPromise = commonPromise
@@ -293,16 +281,25 @@ let createAdapter = function fn(storageName, options) {
                 });
             })
             .catch(commonErrorHandler);
+    } else {
+
+        commonPromise = commonPromise.then(() => ({
+
+            adapter: null,
+            statusCode: SUCCESS_CODE,
+            errorMsg: ''
+        }));
     }
-    getAdapter(storageName);
+    getAdapter(storageName, options);
     return commonPromise;
 };
 
 /**
  * Gets adapter with new or existing database.
  * @param {string} storageName
+ * @param {Object} options
  */
-function getAdapter(storageName) {
+function getAdapter(storageName, options) {
 
     let db = null;
 
@@ -315,6 +312,10 @@ function getAdapter(storageName) {
             }
             if (openedDBObj.hasOwnProperty(storageName)) {
 
+                if (options.useOpen !== true) {
+
+                    throw new Error('ALREADY_OPEN');
+                }
                 db = openedDBObj[storageName];
                 return null;
             }

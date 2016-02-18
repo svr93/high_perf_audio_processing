@@ -55,6 +55,7 @@ function processJS(src) {
         .pipe(jshint())
         .pipe(jshint.reporter(jshintStylish))
         .pipe(babel())
+        .on('error', err => console.log(err.message))
         .pipe(gulp.dest(dest))
         .pipe(gulpif(WATCH, connect.reload()));
 }

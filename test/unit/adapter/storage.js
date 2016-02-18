@@ -42,6 +42,23 @@ define(['adapter/storage'], function(Storage) {
                 });
         });
 
+        it('verifies error data', function(done) {
+
+            Storage.createAdapter(TEST_DB_NAME)
+                .then(function(res) {
+
+                    console.log(res);
+                    expect(res.adapter).toBe(null);
+                    expect(res.errorMsg).toBe('ALREADY_OPEN');
+                    done();
+                })
+                .catch(function(e) {
+
+                    console.log(e.message);
+                    fail(e);
+                });
+        });
+
         it('verifies successful data getting', function(done) {
 
             Storage.createAdapter(TEST_DB_NAME, { useOpen: true })

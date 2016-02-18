@@ -16,3 +16,5 @@ Safari can't close and/or delete database
 in case of active readonly/readwrite transaction
 -------
 FIXED
+
+5) [gulp] livereload server is not working (only 17.02)

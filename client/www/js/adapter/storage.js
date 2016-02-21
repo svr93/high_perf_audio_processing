@@ -1,7 +1,6 @@
 /**
  * TODO:
  * 1) add support for 'format', 'temporary' options.
- * 2) add 'DATA_ALREADY_EXISTS' error support.
  */
 /**
  * Module for data storage.
@@ -66,6 +65,12 @@ function IndexedDBStorageAdapter(storageName) {
 }
 
 /**
+ * Chrome non-documented message.
+ * @type {string}
+ */
+const CHROME_ALREADY_EXISTS_MSG = 'Key already exists in the object store.';
+
+/**
  * IStorageAdapter.prototype.set() implementation.
  */
 IndexedDBStorageAdapter.prototype.set = function fn(name, data, options) {
@@ -106,11 +111,34 @@ IndexedDBStorageAdapter.prototype.set = function fn(name, data, options) {
                 errorMsg: ''
             });
         });
-        transaction.addEventListener('error', () => {
+        transaction.addEventListener('error', evt => {
 
+            evt.preventDefault();
             deleteTransaction(dbName, transaction);
             reject(req.error);
         });
+    }).catch(err => {
+
+        if (err.message === CHROME_ALREADY_EXISTS_MSG) {
+
+            throw new Error('DATA_ALREADY_EXISTS');
+        }
+        if (err.name === 'ConstraintError' && options.rewrite !== true) {
+
+            return this.get(name).then(res => {
+
+                if (res.statusCode === SUCCESS_CODE) {
+
+                    throw new Error('DATA_ALREADY_EXISTS');
+                } else {
+
+                    throw err;
+                }
+            });
+        } else {
+
+            throw err;
+        }
     }).catch(err => {
 
         let errData = commonErrorHandler(err);
@@ -165,8 +193,9 @@ IndexedDBStorageAdapter.prototype.get = function fn(name, options) {
                 errorMsg: ''
             });
         });
-        transaction.addEventListener('error', () => {
+        transaction.addEventListener('error', evt => {
 
+            evt.preventDefault();
             deleteTransaction(dbName, transaction);
             reject(req.error);
         });

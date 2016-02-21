@@ -42,6 +42,27 @@ define(['adapter/storage'], function(Storage) {
                 });
         });
 
+        it('verifies DATA_ALREADY_EXISTS error', function(done) {
+
+            Storage.createAdapter(TEST_DB_NAME, { useOpen: true })
+                .then(function(res) {
+
+                    console.log(res);
+                    return res.adapter.set('a', { b: 'cd' });
+                })
+                .then(function(res) {
+
+                    console.log(res);
+                    expect(res.errorMsg).toBe('DATA_ALREADY_EXISTS');
+                    done();
+                })
+                .catch(function(e) {
+
+                    console.log(e.message);
+                    fail(e);
+                });
+        });
+
         it('verifies error data', function(done) {
 
             Storage.createAdapter(TEST_DB_NAME)

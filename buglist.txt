@@ -22,3 +22,9 @@ FIXED
 6) [test]
 StorageAdapter checker verifies error data FAILED
 Expected '' to be 'ALREADY_OPEN'.
+FIXED
+
+7) [test] [heisenbug] Safari problem:
+StorageAdapter checker verifies successful DB creating FAILED
+Timeout - Async callback was not invoked within timeout
+specified by jasmine.DEFAULT_TIMEOUT_INTERVAL.

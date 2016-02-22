@@ -241,7 +241,8 @@ let transactionObj = {};
  * @return {Promise} Thenable object; resolution -
  * {{
  *  adapter: ?IStorageAdapter Value {null} in case of error.
- *  statusCode: number Value 0 in case of success, error code otherwise.
+ *  statusCode: number Value SUCCESS_CODE in case of success,
+ *  error code otherwise.
  *  errorMsg: string
  * }}
  */
@@ -299,7 +300,7 @@ let createAdapter = function fn(storageName, options) {
                         resolve({
 
                             adapter: null,
-                            statusCode: 0,
+                            statusCode: SUCCESS_CODE,
                             errorMsg: ''
                         });
                     };
@@ -335,7 +336,7 @@ function getAdapter(storageName, options) {
     commonPromise = commonPromise
         .then(res => {
 
-            if (res && res.statusCode !== 0) {
+            if (res && res.statusCode !== SUCCESS_CODE) {
 
                 throw new Error(res.errorMsg);
             }
@@ -400,7 +401,7 @@ function getAdapter(storageName, options) {
             return {
 
                 adapter: new IndexedDBStorageAdapter(storageName),
-                statusCode: 0,
+                statusCode: SUCCESS_CODE,
                 errorMsg: ''
             };
         })

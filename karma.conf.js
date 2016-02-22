@@ -4,7 +4,9 @@ module.exports = function(config) {
     config.set({
 
         frameworks: ['requirejs', 'jasmine'],
-        browsers: ['Chrome', 'Firefox', 'Safari', 'Opera'],
+        browsers: ['Chrome', 'Firefox', 'Safari', 'Opera', 'Yandex'],
+        concurrency: 2,
+        browserNoActivityTimeout: 15000,
         files: [
 
             'test/unit/test-main.js',

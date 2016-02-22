@@ -47,6 +47,7 @@
     "karma-opera-launcher": "^0.3.0",
     "karma-requirejs": "^0.2.3",
     "karma-safari-launcher": "^0.1.1",
+    "karma-yandex-launcher": "^0.1.8",
     "node-static": "^0.7.7"
   }
 }

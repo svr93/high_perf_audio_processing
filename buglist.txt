@@ -28,3 +28,6 @@ FIXED
 StorageAdapter checker verifies successful DB creating FAILED
 Timeout - Async callback was not invoked within timeout
 specified by jasmine.DEFAULT_TIMEOUT_INTERVAL.
+
+8) [test] [heisenbug] Chrome problem:
+Some of your tests did a full page reload!

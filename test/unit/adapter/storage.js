@@ -29,12 +29,20 @@ define(['adapter/storage'], function(Storage) {
                 .then(function(res) {
 
                     console.log(res);
-                    return res.adapter.set('a', { b: 'c' });
+                    return Promise.all([
+
+                        res.adapter.set('a', { b: 'c' }),
+                        res.adapter.set('d', { e: 'f' }),
+                        res.adapter.set('g', { h: 'i' })
+                    ]);
                 })
                 .then(function(res) {
 
                     console.log(res);
-                    expect(res.statusCode).toBe(0);
+                    res.forEach(function(item) {
+
+                        expect(item.statusCode).toBe(0);
+                    });
                     done();
                 })
                 .catch(function(e) {
@@ -88,12 +96,19 @@ define(['adapter/storage'], function(Storage) {
                 .then(function(res) {
 
                     console.log(res);
-                    return res.adapter.get('a');
+                    return Promise.all([
+
+                        res.adapter.get('a'),
+                        res.adapter.get('d'),
+                        res.adapter.get('g')
+                    ]);
                 })
                 .then(function(res) {
 
                     console.log(res);
-                    expect(res.data.b).toBe('c');
+                    expect(res[0].data.b).toBe('c');
+                    expect(res[1].data.e).toBe('f');
+                    expect(res[2].data.h).toBe('i');
                     done();
                 })
                 .catch(function(e) {

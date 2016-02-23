@@ -1,6 +1,8 @@
 define(['adapter/storage'], function(Storage) {
     'use strict';
 
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = 7500;
+
     describe('StorageAdapter checker', function() {
 
         var TEST_DB_NAME = 'test_test';

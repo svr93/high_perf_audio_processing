@@ -276,12 +276,9 @@ let createAdapter = function fn(storageName, options) {
 
                 if (openedDBObj.hasOwnProperty(storageName)) {
 
-                    let promiseList = [];
-                    transactionObj[storageName].forEach(item => {
+                    let promiseList = getTransactionDonePromiseList(
+                        storageName);
 
-                        let promise = getTransactionDonePromise(item);
-                        promiseList.push(promise);
-                    });
                     openedDBObj[storageName].close();
                     delete openedDBObj[storageName];
                     delete transactionObj[storageName];
@@ -484,6 +481,24 @@ function deleteTransaction(storageName, transaction) {
         return;
     }
     activeTransactionSet.delete(transaction);
+}
+
+/**
+ * Gets active transaction list for execution waiting.
+ * @param {string} storageName
+ * @return {Array<Promise>}
+ */
+function getTransactionDonePromiseList(storageName) {
+
+    let promiseList = [];
+    let transactionSet = transactionObj[storageName];
+
+    for (let item of transactionSet) {
+
+        let promise = getTransactionDonePromise(item);
+        promiseList.push(promise);
+    }
+    return promiseList;
 }
 
 /**

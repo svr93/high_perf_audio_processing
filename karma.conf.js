@@ -1,7 +1,7 @@
 module.exports = function(config) {
     'use strict';
 
-    config.set({
+    let configuration = {
 
         frameworks: ['requirejs', 'jasmine'],
         browsers: ['Chrome', 'Firefox', 'Safari', 'Opera', 'Yandex'],
@@ -41,6 +41,19 @@ module.exports = function(config) {
         preprocessors: {
 
             'client/www/js/**/*.js': ['babel']
+        },
+        customLaunchers: {
+
+            Chrome_travis_ci: {
+
+                base: 'Chrome',
+                flags: ['--no-sandbox']
+            }
         }
-    });
+    };
+    if (process.env.TRAVIS) {
+
+        configuration.browsers = ['Chrome_travis_ci'];
+    }
+    config.set(configuration);
 };

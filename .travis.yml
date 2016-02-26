@@ -1,6 +1,8 @@
 language: node_js
 node_js:
   - "stable"
+addons:
+  firefox: "stable"
 before_script:
   - npm i -g gulp
   - npm i -g bower

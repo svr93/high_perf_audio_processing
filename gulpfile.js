@@ -8,6 +8,8 @@ const gulpif = require('gulp-if');
 const connect = require('gulp-connect');
 const Server = require('karma').Server;
 
+const coveralls = require('gulp-coveralls');
+
 const WATCH = (process.argv.indexOf('watch') !== -1);
 const PORT = 8001;
 
@@ -92,4 +94,10 @@ gulp.task('test', () => {
         configFile: `${ __dirname }/karma.conf.js`,
         singleRun: true
     }).start();
+});
+
+gulp.task('coveralls', () => {
+
+    return gulp.src('coverage/**/lcov.info')
+        .pipe(coveralls());
 });

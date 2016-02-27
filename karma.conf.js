@@ -7,6 +7,12 @@ module.exports = function(config) {
         browsers: ['Chrome', 'Firefox', 'Safari', 'Opera', 'Yandex'],
         concurrency: 2,
         browserNoActivityTimeout: 15000,
+        reporters: ['progress', 'coverage'],
+        coverageReporter: {
+
+            type: 'lcov',
+            dir: 'coverage/'
+        },
         files: [
 
             'test/unit/test-main.js',
@@ -40,7 +46,7 @@ module.exports = function(config) {
         ],
         preprocessors: {
 
-            'client/www/js/**/*.js': ['babel']
+            'client/www/js/**/*.js': ['babel', 'coverage']
         },
         customLaunchers: {
 

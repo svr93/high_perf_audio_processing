@@ -7,3 +7,5 @@
 /client/www/js/vendor/
 
 /server/www/
+
+/coverage/

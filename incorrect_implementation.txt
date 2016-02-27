@@ -2,3 +2,7 @@
 In case of two consecutive requests with minimum interval
 options.useOpen param check _always_ allows use existing connection
 to the database (because check outside of Promise) -> #6
+
+2) activeTransactionSet existence check:
+In case of using system name as storageName transactionObj[storageName]
+value _always_ equivalent to 'true' boolean value

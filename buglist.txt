@@ -41,3 +41,4 @@ Timeout - Async callback was not invoked within timeout specified by jasmine.DEF
 
 11) [test]
 activeTransactionSet.delete is not a function.
+FIXED

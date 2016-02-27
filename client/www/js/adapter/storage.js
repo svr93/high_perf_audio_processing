@@ -460,12 +460,9 @@ function checkArgs(argData, fn) {
  */
 function addTransaction(storageName, transaction) {
 
-    let activeTransactionSet = transactionObj[storageName];
-    if (!activeTransactionSet) {
+    if (!transactionObj.hasOwnProperty(storageName)) { return; }
 
-        return;
-    }
-    activeTransactionSet.add(transaction);
+    transactionObj[storageName].add(transaction);
 }
 
 /**
@@ -475,12 +472,9 @@ function addTransaction(storageName, transaction) {
  */
 function deleteTransaction(storageName, transaction) {
 
-    let activeTransactionSet = transactionObj[storageName];
-    if (!activeTransactionSet) {
+    if (!transactionObj.hasOwnProperty(storageName)) { return; }
 
-        return;
-    }
-    activeTransactionSet.delete(transaction);
+    transactionObj[storageName].delete(transaction);
 }
 
 /**

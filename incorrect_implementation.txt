@@ -5,4 +5,4 @@ to the database (because check outside of Promise) -> #6
 
 2) activeTransactionSet existence check:
 In case of using system name as storageName transactionObj[storageName]
-value _always_ equivalent to 'true' boolean value
+value _always_ equivalent to 'true' boolean value -> #11

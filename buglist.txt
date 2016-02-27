@@ -38,3 +38,6 @@ Disconnected (1 times), because no message in 10000 ms.
 10) [test] [heisenbug] Safari problem:
 StorageAdapter checker verifies successful data setting FAILED
 Timeout - Async callback was not invoked within timeout specified by jasmine.DEFAULT_TIMEOUT_INTERVAL.
+
+11) [test]
+activeTransactionSet.delete is not a function.

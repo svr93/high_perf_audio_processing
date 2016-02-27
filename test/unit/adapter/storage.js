@@ -7,6 +7,54 @@ define(['adapter/storage'], function(Storage) {
 
         var TEST_DB_NAME = 'test_test';
 
+        it('verifies TOO_MANY_ARGUMENTS error on DB creating', function(done) {
+
+            Storage.createAdapter(TEST_DB_NAME, { useOpen: true }, 'arg3')
+                .then(function(res) {
+
+                    console.log(res);
+                    expect(res.errorMsg).toBe('TOO_MANY_ARGUMENTS');
+                    done();
+                })
+                .catch(function(e) {
+
+                    console.log(e.message);
+                    fail(e);
+                });
+        });
+
+        it('verifies MISSING_ARGUMENT error on DB creating', function(done) {
+
+            Storage.createAdapter()
+                .then(function(res) {
+
+                    console.log(res);
+                    expect(res.errorMsg).toBe('MISSING_ARGUMENT');
+                    done();
+                })
+                .catch(function(e) {
+
+                    console.log(e.message);
+                    fail(e);
+                });
+        });
+
+        it('verifies INCORRECT_ARGUMENT error on DB creating', function(done) {
+
+            Storage.createAdapter(TEST_DB_NAME, 'arg2')
+                .then(function(res) {
+
+                    console.log(res);
+                    expect(res.errorMsg).toBe('INCORRECT_ARGUMENT');
+                    done();
+                })
+                .catch(function(e) {
+
+                    console.log(e.message);
+                    fail(e);
+                });
+        });
+
         it('verifies successful DB creating', function(done) {
 
             Storage.createAdapter(TEST_DB_NAME, { rewrite: true })
@@ -14,6 +62,70 @@ define(['adapter/storage'], function(Storage) {
 
                     console.log(res);
                     expect(res.statusCode).toBe(0);
+                    done();
+                })
+                .catch(function(e) {
+
+                    console.log(e.message);
+                    fail(e);
+                });
+        });
+
+        it('verifies TOO_MANY_ARGUMENTS error (data setting)', function(done) {
+
+            Storage.createAdapter(TEST_DB_NAME, { useOpen: true })
+                .then(function(res) {
+
+                    console.log(res);
+                    return res.adapter.set('q', 'w', 'e', 'arg4');
+                })
+                .then(function(res) {
+
+                    console.log(res);
+                    expect(res.errorMsg).toBe('TOO_MANY_ARGUMENTS');
+                    done();
+                })
+                .catch(function(e) {
+
+                    console.log(e.message);
+                    fail(e);
+                });
+        });
+
+        it('verifies MISSING_ARGUMENT error (data setting)', function(done) {
+
+            Storage.createAdapter(TEST_DB_NAME, { useOpen: true })
+                .then(function(res) {
+
+                    console.log(res);
+                    return res.adapter.set();
+                })
+                .then(function(res) {
+
+                    console.log(res);
+                    expect(res.errorMsg).toBe('MISSING_ARGUMENT');
+                    done();
+                })
+                .catch(function(e) {
+
+                    console.log(e.message);
+                    fail(e);
+                });
+        });
+
+        it('verifies INCORRECT_ARGUMENT error (data setting)', function(done) {
+
+
+            Storage.createAdapter(TEST_DB_NAME, { useOpen: true })
+                .then(function(res) {
+
+                    console.log(res);
+                    return res.adapter.set('q', 'w', 'arg3');
+                })
+                .then(function(res) {
+
+                    console.log(res);
+                    expect(res.errorMsg).toBe('INCORRECT_ARGUMENT');
                     done();
                 })
                 .catch(function(e) {
@@ -107,6 +219,70 @@ define(['adapter/storage'], function(Storage) {
                     console.log(res);
                     expect(res.adapter).toBe(null);
                     expect(res.errorMsg).toBe('ALREADY_OPEN');
+                    done();
+                })
+                .catch(function(e) {
+
+                    console.log(e.message);
+                    fail(e);
+                });
+        });
+
+        it('verifies TOO_MANY_ARGUMENTS error (data getting)', function(done) {
+
+            Storage.createAdapter(TEST_DB_NAME, { useOpen: true })
+                .then(function(res) {
+
+                    console.log(res);
+                    return res.adapter.get('q', 'w', 'arg3');
+                })
+                .then(function(res) {
+
+                    console.log(res);
+                    expect(res.errorMsg).toBe('TOO_MANY_ARGUMENTS');
+                    done();
+                })
+                .catch(function(e) {
+
+                    console.log(e.message);
+                    fail(e);
+                });
+        });
+
+        it('verifies MISSING_ARGUMENT error (data getting)', function(done) {
+
+            Storage.createAdapter(TEST_DB_NAME, { useOpen: true })
+                .then(function(res) {
+
+                    console.log(res);
+                    return res.adapter.get()
+                })
+                .then(function(res) {
+
+                    console.log(res);
+                    expect(res.errorMsg).toBe('MISSING_ARGUMENT');
+                    done();
+                })
+                .catch(function(e) {
+
+                    console.log(e.message);
+                    fail(e);
+                });
+        });
+
+        it('verifies INCORRECT_ARGUMENT error (data getting)', function(done) {
+
+
+            Storage.createAdapter(TEST_DB_NAME, { useOpen: true })
+                .then(function(res) {
+
+                    console.log(res);
+                    return res.adapter.get('q', 'arg2');
+                })
+                .then(function(res) {
+
+                    console.log(res);
+                    expect(res.errorMsg).toBe('INCORRECT_ARGUMENT');
                     done();
                 })
                 .catch(function(e) {

@@ -52,6 +52,32 @@ define(['adapter/storage'], function(Storage) {
                 });
         });
 
+        it('verifies system name using', function(done) {
+
+            var SYSTEM_NAME = 'toString';
+
+            Storage.createAdapter(SYSTEM_NAME, { rewrite: true })
+                .then(function(res) {
+
+                    console.log(res);
+                    return res.adapter.set(SYSTEM_NAME, {
+
+                        [SYSTEM_NAME]: SYSTEM_NAME
+                    });
+                })
+                .then(function(res) {
+
+                    console.log(res);
+                    expect(res.statusCode).toBe(0);
+                    done();
+                })
+                .catch(function(e) {
+
+                    console.log(e.message);
+                    fail(e);
+                });
+        });
+
         it('verifies DATA_ALREADY_EXISTS error', function(done) {
 
             Storage.createAdapter(TEST_DB_NAME, { useOpen: true })

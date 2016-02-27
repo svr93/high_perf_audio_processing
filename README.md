@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.org/svr93/high_perf_audio_processing.svg?branch=master)](https://travis-ci.org/svr93/high_perf_audio_processing)
 [![Codacy Badge](https://api.codacy.com/project/badge/grade/d993cb7ad3bf4805a4835715674ba59c)](https://www.codacy.com/app/svr93/high_perf_audio_processing)
+[![devDependency Status](https://david-dm.org/svr93/high_perf_audio_processing/dev-status.svg)](https://david-dm.org/svr93/high_perf_audio_processing#info=devDependencies)
 
 ## Module writing order
 ### - specification

@@ -65,7 +65,7 @@ function processJS(src) {
 /**
  * Regular expression for relative path search.
  */
-const RELATIVE_PATH_REG_EXP = /^.+www\/js([\w/]+)\/[\w]+.js/;
+const RELATIVE_PATH_REG_EXP = /^.+www\/js([\w/]+)\/[\w\-]+.js/;
 
 /**
  * Gets relative path for JS files.

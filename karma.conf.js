@@ -1,6 +1,8 @@
 module.exports = function(config) {
     'use strict';
 
+    const VENDOR_PATH = 'client/www/js/vendor';
+
     let configuration = {
 
         frameworks: ['requirejs', 'jasmine'],
@@ -41,6 +43,10 @@ module.exports = function(config) {
             },
             {
                 pattern: 'test/unit/adapter/storage.js',
+                included: false
+            },
+            {
+                pattern: `${ VENDOR_PATH }/adapterjs/publish/adapter.min.js`,
                 included: false
             }
         ],

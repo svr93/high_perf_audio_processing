@@ -22,6 +22,7 @@
   ],
   "dependencies": {
     "backbone": "~1.2.3",
-    "requirejs": "~2.1.22"
+    "requirejs": "~2.1.22",
+    "adapterjs": "~0.13.0"
   }
 }

@@ -42,6 +42,10 @@ const codeBase = Object.freeze({
         DATA_NOT_FOUND: 28,
         UNKNOWN_ERROR_TRANSACTION: 29
     }),
+    userMedia: Object.freeze({
+
+        PERMISSION_ERROR_MEDIA: 40
+    }),
     common: Object.freeze({
 
         UNKNOWN_ERROR: 90
@@ -125,6 +129,28 @@ function getStringRepresentationByCode(code) {
     return false;
 }
 
+/**
+ * Gets custom error data.
+ * @param {Error} err
+ * @return {{
+ *  statusCode: number,
+ *  errorMsg: string
+ * }}
+ */
+function getErrorData(err) {
+
+    let statusCode = getCodeByStringRepresentation(err.message);
+    if (statusCode === false) {
+
+        statusCode = getCodeByStringRepresentation('UNKNOWN_ERROR');
+    }
+    return {
+
+        statusCode: statusCode,
+        errorMsg: err.message
+    };
+}
+
 export {
 
     SUCCESS_CODE,
@@ -132,5 +158,6 @@ export {
     getTypeCodeData,
     getTypeByCode,
     getCodeByStringRepresentation,
-    getStringRepresentationByCode
+    getStringRepresentationByCode,
+    getErrorData
 };

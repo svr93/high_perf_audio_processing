@@ -10,6 +10,7 @@ const Math = window.Math;
 const console = window.console;
 
 const indexedDB = window.indexedDB;
+const mediaDevices = window.navigator.mediaDevices;
 
 /**
  * Wrapper for 'vendor/adapterjs/publish/adapter.min' (non-AMD module)
@@ -23,5 +24,6 @@ export {
     Math,
     console,
     indexedDB,
+    mediaDevices,
     AdapterJS
 };

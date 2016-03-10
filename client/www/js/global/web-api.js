@@ -11,6 +11,7 @@ const console = window.console;
 
 const indexedDB = window.indexedDB;
 const mediaDevices = window.navigator.mediaDevices;
+const userAgent = window.navigator.userAgent;
 
 /**
  * Wrapper for 'vendor/adapterjs/publish/adapter.min' (non-AMD module)
@@ -25,5 +26,6 @@ export {
     console,
     indexedDB,
     mediaDevices,
+    userAgent,
     AdapterJS
 };

@@ -1,6 +1,7 @@
 /**
  * Module need for remove JavaScript flaws.
  */
+import { userAgent } from 'global/web-api';
 
 'use strict';
 
@@ -33,8 +34,34 @@ function isNumeric(val) {
     return parseFloat(val) === val;
 }
 
+/**
+ * Gets browser name. Provided by MDN.
+ * @return {(boolean|string)} False in case of incorrect user agent.
+ */
+function getBrowserName() {
+
+    if (userAgent.includes('Chrome')) {
+
+        return 'Google Chrome';
+    } else if (userAgent.includes('Safari')) {
+
+        return 'Apple Safari';
+    } else if (userAgent.includes('Opera')) {
+
+        return 'Opera';
+    } else if (userAgent.includes('Firefox')) {
+
+        return 'Mozilla Firefox';
+    } else if (userAgent.includes('MSIE')) {
+
+        return 'Microsoft Internet Explorer';
+    }
+    return false;
+}
+
 export {
 
     checkNativeType,
-    isNumeric
+    isNumeric,
+    getBrowserName
 };

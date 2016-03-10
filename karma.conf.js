@@ -6,7 +6,14 @@ module.exports = function(config) {
     let configuration = {
 
         frameworks: ['requirejs', 'jasmine'],
-        browsers: ['Chrome', 'Firefox', 'Safari', 'Opera', 'Yandex'],
+        browsers: [
+
+            'chromeFakeUI',
+            'Firefox',
+            'Safari',
+            'operaFakeUI',
+            'yandexFakeUI'
+        ],
         concurrency: 2,
         browserNoActivityTimeout: 15000,
         reporters: ['progress', 'coverage'],
@@ -48,6 +55,14 @@ module.exports = function(config) {
             {
                 pattern: `${ VENDOR_PATH }/adapterjs/publish/adapter.min.js`,
                 included: false
+            },
+            {
+                pattern: 'client/www/js/lib/media-stream-manager.js',
+                included: false
+            },
+            {
+                pattern: 'test/unit/lib/media-stream-manager.js',
+                included: false
             }
         ],
         preprocessors: {
@@ -60,6 +75,21 @@ module.exports = function(config) {
 
                 base: 'Chrome',
                 flags: ['--no-sandbox']
+            },
+            chromeFakeUI: {
+
+                base: 'Chrome',
+                flags: ['--use-fake-ui-for-media-stream']
+            },
+            operaFakeUI: {
+
+                base: 'Opera',
+                flags: ['--use-fake-ui-for-media-stream']
+            },
+            yandexFakeUI: {
+
+                base: 'Yandex',
+                flags: ['--use-fake-ui-for-media-stream']
             }
         }
     };

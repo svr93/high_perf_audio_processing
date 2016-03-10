@@ -9,6 +9,7 @@ define([
 
     var console = WebApi.console;
     var SUCCESS_CODE = ErrorCodeManager.SUCCESS_CODE;
+    var browserName = Util.getBrowserName();
 
     describe('MediaStreamManager checker', function() {
 
@@ -32,6 +33,13 @@ define([
 
             fake: true
         };
+
+        /**
+         * Delay for prevent Safari overload.
+         * @type {number}
+         */
+        var SAFARI_DELAY = 100;
+
         it('verifies successful stream creating', function(done) {
 
             MediaStreamManager.createStream(testOptionData)
@@ -56,8 +64,16 @@ define([
 
                     console.log(res);
                     expect(res.stream.id).toBe(id);
-                    done();
+                    if (browserName !== 'Apple Safari') {
+
+                        return;
+                    }
+                    return new Promise(function(resolve) {
+
+                        setTimeout(resolve, SAFARI_DELAY);
+                    });
                 })
+                .then(done)
                 .catch(commonErrorHandler);
         });
     });

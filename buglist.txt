@@ -42,3 +42,7 @@ Timeout - Async callback was not invoked within timeout specified by jasmine.DEF
 11) [test]
 activeTransactionSet.delete is not a function.
 FIXED
+
+12) [test] [heisenbug] Yandex problem:
+Cannot read property 'spies' of undefined
+at /Users/shamsheev/_development_common_/WebstormProjects/high_perf_audio_processing/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:772

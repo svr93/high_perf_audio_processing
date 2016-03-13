@@ -26,6 +26,12 @@ define([
         var streamTypeList = ['MediaStream', 'LocalMediaStream', 'NPObject'];
 
         /**
+         * Constraints data types.
+         * @type {Array<string>}
+         */
+        var constraintTypeList = ['Object', 'Boolean'];
+
+        /**
          * Special stream options for test.
          * @type {Object}
          */
@@ -75,6 +81,17 @@ define([
                 })
                 .then(done)
                 .catch(commonErrorHandler);
+        });
+
+        it('verifies data with stream constraints', function() {
+
+            var constraintData = MediaStreamManager.getSupportedOptions();
+            var type = Util.checkNativeType(constraintData);
+            expect(constraintTypeList.indexOf(type)).not.toBe(-1);
+            if (constraintData) {
+
+                expect(constraintData.echoCancellation).not.toBe('undefined');
+            }
         });
     });
 

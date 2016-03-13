@@ -64,6 +64,13 @@ function createStream(options) {
 }
 
 /**
+ * Gets supported constraints for stream creation.
+ * @return {(boolean|Object<string, boolean>)} False in case of data lack,
+ * object with data otherwise.
+ */
+function getSupportedOptions() {}
+
+/**
  * Common error handler for promise.
  * @param {Error} err
  * @return {{
@@ -81,5 +88,6 @@ function commonErrorHandler(err) {
 
 export {
 
-    createStream
+    createStream,
+    getSupportedOptions
 };

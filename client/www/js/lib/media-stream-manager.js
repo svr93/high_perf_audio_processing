@@ -68,7 +68,14 @@ function createStream(options) {
  * @return {(boolean|Object<string, boolean>)} False in case of data lack,
  * object with data otherwise.
  */
-function getSupportedOptions() {}
+function getSupportedOptions() {
+
+    if (mediaDevices.getSupportedConstraints) {
+
+        return mediaDevices.getSupportedConstraints();
+    }
+    return false;
+}
 
 /**
  * Common error handler for promise.

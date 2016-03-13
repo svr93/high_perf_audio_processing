@@ -90,7 +90,8 @@ define([
             expect(constraintTypeList.indexOf(type)).not.toBe(-1);
             if (constraintData) {
 
-                expect(constraintData.echoCancellation).not.toBe('undefined');
+                console.log(Object.keys(constraintData));
+                expect(constraintData.deviceId).not.toBe(undefined);
             }
         });
     });

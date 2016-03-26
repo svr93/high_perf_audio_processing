@@ -1,0 +1,15 @@
+    Задача: необходимо создавать объект, способный выполнять запись звука
+с возможностью использования паузы.
+    Возможные решения:
+
+    1) MediaRecorder
+    Поддержка (Desktop):
+    - Chrome: 47+ (flag; only video) [MDN]; 49+ (by default) [chromestatus]
+    - Firefox: 25+ [mdn]
+
+    2) Работа напрямую с input- и output-потоком:
+    AudioNode.connect(AudioNode)
+    AudioNode.disconnect() выполняется для создания паузы
+
+    Оптимизация:
+    AudioContext.suspend() уменьшает использование CPU

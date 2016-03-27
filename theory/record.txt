@@ -13,3 +13,12 @@
 
     Оптимизация:
     AudioContext.suspend() уменьшает использование CPU
+
+    Обработка аудиобуфера "на лету" -
+    https://developer.mozilla.org/en-US/docs/Web/API/ScriptProcessorNode
+    (в будущем будет использоваться механизм Audio Workers)
+    AudioContext.suspend() может использоваться для создания паузы
+
+    createMediaStreamSource не поддерживается в Safari
+    https://lists.webkit.org/pipermail/webkit-dev/2015-March/027314.html
+

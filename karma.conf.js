@@ -63,6 +63,14 @@ module.exports = function(config) {
             {
                 pattern: 'test/unit/lib/media-stream-manager.js',
                 included: false
+            },
+            {
+                pattern: 'client/www/js/lib/native-support-manager.js',
+                included: false,
+            },
+            {
+                pattern: 'test/unit/lib/native-support-manager.js',
+                included: false,
             }
         ],
         preprocessors: {

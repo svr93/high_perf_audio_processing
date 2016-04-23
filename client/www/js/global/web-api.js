@@ -13,6 +13,33 @@ const indexedDB = window.indexedDB;
 const mediaDevices = window.navigator.mediaDevices;
 const userAgent = window.navigator.userAgent;
 
+export const MediaStream =
+    window.MediaStream ||
+    window.webkitMediaStream ||
+    window.mozMediaStream;
+
+export const AudioContext =
+    window.AudioContext ||
+    window.webkitAudioContext ||
+    window.mozAudioContext; /* unprefixed since FF 21 [fxsitecompat] */
+
+/**
+ * Unprefixed native function can be used without dependency-style.
+ */
+export const MediaRecorder = window.MediaRecorder;
+
+export const RTCPeerConnection =
+    window.RTCPeerConnection ||
+    window.webkitRTCPeerConnection ||
+    window.mozRTCPeerConnection;
+
+export const crypto = window.crypto;
+
+export const IDBKeyRange =
+    window.IDBKeyRange ||
+    window.webkitIDBKeyRange ||
+    window.mozIDBKeyRange;
+
 /**
  * Wrapper for 'vendor/adapterjs/publish/adapter.min' (non-AMD module)
  * @type {Object}

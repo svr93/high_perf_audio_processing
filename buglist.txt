@@ -49,3 +49,4 @@ at /Users/shamsheev/_development_common_/WebstormProjects/high_perf_audio_proces
 
 13) [test] All browsers problem:
 NativeSupportManager checker verifies "unknown" value support FAILED
+FIXED [TEST PART WAS DELETED]

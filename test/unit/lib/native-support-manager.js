@@ -40,20 +40,10 @@ define([
 
         it('verifies "unknown" value support', function() {
 
-            var feature = 'abcdef';
-            var res;
-
-            res = Module.checkMediaStreamSupportLevel(feature);
-            expect(res).toBe(supportLevel.UNKNOWN);
-
-            res = Module.checkMediaRecorderSupportLevel(feature);
-            expect(res).toBe(supportLevel.UNKNOWN);
-
-            res = Module.checkWebRTCSupportLevel(feature);
-            expect(res).toBe(supportLevel.UNKNOWN);
-
-            res = Module.checkCryptoSupportLevel();
-            expect(res).toBe(supportLevel.UNKNOWN);
+            /*
+                deleted; reason - "unknown" value used only for functions
+                with 'BUGGY' block.
+             */
         });
 
         it('verifies getSupportLevelByCode() func', function() {

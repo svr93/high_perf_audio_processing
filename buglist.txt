@@ -46,3 +46,6 @@ FIXED
 12) [test] [heisenbug] Yandex problem:
 Cannot read property 'spies' of undefined
 at /Users/shamsheev/_development_common_/WebstormProjects/high_perf_audio_processing/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:772
+
+13) [test] All browsers problem:
+NativeSupportManager checker verifies "unknown" value support FAILED

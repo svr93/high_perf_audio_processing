@@ -1,3 +1,5 @@
+import { performance } from 'global/web-api';
+import { SUCCESS_CODE, getErrorData } from 'lib/error-code-manager';
 
 /**
  * ---Module contains nested handlers for LPCM data---
@@ -16,7 +18,11 @@ export const fnFormat = Object.freeze({
 /**
  * Base handler object.
  * @type {Object<string, {
- *  fn: function(Float32Array),
+ *  fn: function(Float32Array):{
+ *      execTime: number,
+ *      statusCode: number,
+ *      errorMsg: string
+ *  },
  *  format: fnFormat,
  *  optimalArraySize: number=
  * }>}

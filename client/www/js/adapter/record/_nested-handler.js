@@ -15,10 +15,16 @@ export const fnFormat = Object.freeze({
 
 /**
  * Base handler object.
- * @type {Object<string, { fn: function(Float32Array), format: fnFormat }>}
+ * @type {Object<string, {
+ *  fn: function(Float32Array),
+ *  format: fnFormat,
+ *  optimalArraySize: number=
+ * }>}
+ *
+ * optimalArraySize - size that allows process data w/o performance problems.
  */
 export const handlerObj = Object.freeze({
 
     mul99_100: Object.freeze({}),
-    mul99_100__asm: Object.freeze({})
+    mul99_100__asm_js: Object.freeze({})
 });

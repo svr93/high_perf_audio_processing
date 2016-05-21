@@ -17,8 +17,8 @@ export const FnFormat = Object.freeze({
 
 /**
  * Base handler object.
- * @type {Object<string, {
- *  fn: function(Float32Array):{
+ * @type {!Object<string, !{
+ *  fn: function(!Float32Array):!{
  *      execTime: number,
  *      statusCode: number,
  *      errorMsg: string

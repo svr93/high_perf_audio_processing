@@ -121,21 +121,19 @@ define([
         var fullTime = 0;
         var count = 0;
 
-        var prevTime = 0;
-        var maxTime = null;
+        var maxTime = 0;
 
         var intervalTimerId = setInterval(function() {
 
             var arr = getRandomArray(currentSampleCount);
             var execTime = handlerObj[handlerName].fn(arr).execTime;
 
-            if (execTime > prevTime) {
+            if (execTime > maxTime) {
 
                 maxTime = execTime;
             }
             fullTime += execTime;
             count++;
-            prevTime = execTime;
         }, intervalTime);
         setTimeout(function() {
 

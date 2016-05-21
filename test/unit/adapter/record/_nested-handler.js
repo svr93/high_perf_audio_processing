@@ -78,15 +78,15 @@ define([
             }
         });
 
-        var name = 'mul99_100';
-        it('verifies load & equability (' + name + ')#GD1,2', function(done) {
+        var fn1 = 'mul99_100';
+        it('verifies load & equability (' + fn1 + ')#GD1,2', function(done) {
 
-            testProcessingSpeed(name, done);
+            testProcessingSpeed(fn1, done);
         });
-        name = 'mul99_100__asm_js';
-        it('verifies load & equability (' + name + ')#GD1,2', function(done) {
+        var fn2 = 'mul99_100__asm_js';
+        it('verifies load & equability (' + fn2 + ')#GD1,2', function(done) {
 
-            testProcessingSpeed(name, done);
+            testProcessingSpeed(fn2, done);
         });
 
         it('verifies data mutability', function() {

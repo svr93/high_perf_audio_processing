@@ -71,7 +71,15 @@ module.exports = function(config) {
             {
                 pattern: 'test/unit/lib/native-support-manager.js',
                 included: false,
-            }
+            }/*,
+            {
+                pattern: 'client/www/js/adapter/record/_nested-handler.js',
+                included: false,
+            },
+            {
+                pattern: 'test/unit/adapter/record/_nested-handler.js',
+                included: false,
+            }*/
         ],
         preprocessors: {
 

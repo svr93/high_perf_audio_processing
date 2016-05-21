@@ -7,9 +7,9 @@ import { SUCCESS_CODE, getErrorData } from 'lib/error-code-manager';
 
 /**
  * Function format (related with optimizations).
- * @typedef {number}
+ * @enum {number}
  */
-export const fnFormat = Object.freeze({
+export const FnFormat = Object.freeze({
 
     SIMPLE: 0,
     ASM_JS: 1
@@ -23,7 +23,7 @@ export const fnFormat = Object.freeze({
  *      statusCode: number,
  *      errorMsg: string
  *  },
- *  format: fnFormat,
+ *  format: FnFormat,
  *  optimalArraySize: number=
  * }>}
  *

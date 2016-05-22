@@ -40,6 +40,8 @@ export const IDBKeyRange =
     window.webkitIDBKeyRange ||
     window.mozIDBKeyRange;
 
+export const performance = window.performance;
+
 /**
  * Wrapper for 'vendor/adapterjs/publish/adapter.min' (non-AMD module)
  * @type {Object}

@@ -31,6 +31,51 @@ export const FnFormat = Object.freeze({
  */
 export const handlerObj = Object.freeze({
 
-    mul99_100: Object.freeze({}),
+    mul99_100: Object.freeze({
+
+        fn: mul99_100,
+        format: FnFormat.SIMPLE,
+    }),
     mul99_100__asm_js: Object.freeze({})
 });
+
+/**
+ * Executes 'elem * 99 / 100'.
+ * @param {!Float32Array} arr
+ * @return {!HandlerResult}
+ *
+ * --mutable--
+ */
+function mul99_100(arr) {
+
+    let len = arr.length;
+    let startTime = performance.now();
+
+    for (let i = 0; i < len; ++i) {
+
+        arr[i] *= 0.99;
+    }
+    let execTime = performance.now() - startTime;
+    return new HandlerResult(null, execTime);
+}
+
+/**
+ * Creates handler execution result.
+ * @param {?Error} err
+ * @param {number} execTime
+ * @constructor
+ *
+ * --performanceImprovements--
+ */
+function HandlerResult(err, execTime) {
+
+    if (err) {
+
+        Object.assign(this, getErrorData(err));
+    } else {
+
+        this.statusCode = SUCCESS_CODE;
+        this.errorMsg = '';
+    }
+    this.execTime = execTime;
+}

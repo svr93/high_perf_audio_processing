@@ -66,6 +66,7 @@ FIXED [MIN COEFFICIENT WAS DECREASED]
 16) [test] All browsers problem:
 record.NestedHandler checker compares func performance FAILED
 Expected <num1> to be greater than <num2>.
+FIXED [TEST PART WAS DELETED]
 
 17) [test] Safari problem:
 Safari 9.1.0 (Mac OS X 10.11.4) ERROR

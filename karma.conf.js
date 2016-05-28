@@ -71,6 +71,10 @@ module.exports = function(config) {
             {
                 pattern: 'test/unit/lib/native-support-manager.js',
                 included: false,
+            },
+            {
+                pattern: 'client/www/js/global/asm-js-wrapper.js',
+                included: false,
             }/*,
             {
                 pattern: 'client/www/js/adapter/record/_nested-handler.js',

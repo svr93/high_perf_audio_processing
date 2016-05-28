@@ -55,11 +55,13 @@ FIXED [TEST PART WAS DELETED]
 record.NestedHandler checker
 verifies load & equability (mul99_100)#GD1,2 FAILED
 Expected <num> to be greater than 0.6.
+FIXED [MIN COEFFICIENT WAS DECREASED]
 
 15) [test] All browsers problem:
 record.NestedHandler checker
 verifies load & equability (mul99_100__asm_js)#GD1,2 FAILED
 Expected <num> to be greater than 0.6.
+FIXED [MIN COEFFICIENT WAS DECREASED]
 
 16) [test] All browsers problem:
 record.NestedHandler checker compares func performance FAILED

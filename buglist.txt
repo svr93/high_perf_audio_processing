@@ -66,3 +66,8 @@ FIXED [MIN COEFFICIENT WAS DECREASED]
 16) [test] All browsers problem:
 record.NestedHandler checker compares func performance FAILED
 Expected <num1> to be greater than <num2>.
+
+17) [test] Safari problem:
+Safari 9.1.0 (Mac OS X 10.11.4) ERROR
+TypeError: undefined is not an object
+(evaluating 'runnableResources[spec.id].customEqualityTesters')

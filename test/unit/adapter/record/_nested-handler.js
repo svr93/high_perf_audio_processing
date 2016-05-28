@@ -23,7 +23,7 @@ define([
      * Delay for setInterval() clear.
      * @type {number}
      */
-    var TEST_TIME = 2.5 * 1000;
+    var TEST_TIME = 1.25 * 1000;
 
     /**
      * Max coefficient for GD1 test.

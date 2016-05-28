@@ -75,3 +75,4 @@ TypeError: undefined is not an object
 
 18) [test] Firefox problem:
 TypeError: runnableResources[spec.id] is undefined
+FIXED [TEST TIME WAS DECREASED]

@@ -72,3 +72,6 @@ FIXED [TEST PART WAS DELETED]
 Safari 9.1.0 (Mac OS X 10.11.4) ERROR
 TypeError: undefined is not an object
 (evaluating 'runnableResources[spec.id].customEqualityTesters')
+
+18) [test] Firefox problem:
+TypeError: runnableResources[spec.id] is undefined

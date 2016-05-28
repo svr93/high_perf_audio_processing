@@ -125,8 +125,9 @@ define([
 
         var intervalTimerId = setInterval(function() {
 
-            var arr = getRandomArray(currentSampleCount);
-            var execTime = handlerObj[handlerName].fn(arr).execTime;
+            var input = getRandomArray(currentSampleCount);
+            var output = new Float32Array(currentSampleCount);
+            var execTime = handlerObj[handlerName].fn(input, output).execTime;
 
             if (execTime > maxTime) {
 
@@ -167,12 +168,13 @@ define([
             min: 0,
             max: currentSampleCount
         };
-        var dataArr = getRandomArray(currentSampleCount);
+        var input = getRandomArray(currentSampleCount);
+        var output = new Float32Array(currentSampleCount);
         var indexArr = getRandomIntArray(INDEX_COUNT, options);
 
-        var oldTestValArr = getArrData(dataArr, indexArr);
-        handlerObj[handlerName].fn(dataArr);
-        var newTestValArr = getArrData(dataArr, indexArr);
+        var oldTestValArr = getArrData(input, indexArr);
+        handlerObj[handlerName].fn(input, output);
+        var newTestValArr = getArrData(output, indexArr);
 
         expect(oldTestValArr).not.toEqual(newTestValArr);
     }
@@ -186,11 +188,13 @@ define([
 
         var sum = 0;
         var i = 0;
-        var arr = null;
+        var input = null;
+        var output = null;
         for (i; i < count; ++i) {
 
-            arr = getRandomArray(currentSampleCount);
-            sum += handlerObj[handlerName].fn(arr).execTime;
+            input = getRandomArray(currentSampleCount);
+            output = new Float32Array(currentSampleCount);
+            sum += handlerObj[handlerName].fn(input, output).execTime;
         }
         return sum;
     }

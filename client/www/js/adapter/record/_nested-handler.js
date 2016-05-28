@@ -18,7 +18,7 @@ export const FnFormat = Object.freeze({
 /**
  * Base handler object.
  * @type {!Object<string, !{
- *  fn: function(!Float32Array):!{
+ *  fn: function(!Float32Array, !Float32Array):!{
  *      execTime: number,
  *      statusCode: number,
  *      errorMsg: string
@@ -41,19 +41,20 @@ export const handlerObj = Object.freeze({
 
 /**
  * Executes 'elem * 99 / 100'.
- * @param {!Float32Array} arr
+ * @param {!Float32Array} inputArr
+ * @param {!Float32Array} outputArr
  * @return {!HandlerResult}
  *
  * --mutable--
  */
-function mul99_100(arr) {
+function mul99_100(inputArr, outputArr) {
 
-    let len = arr.length;
+    let len = inputArr.length;
     let startTime = performance.now();
 
     for (let i = 0; i < len; ++i) {
 
-        arr[i] *= 0.99;
+        outputArr[i] = inputArr[i] * 0.99;
     }
     let execTime = performance.now() - startTime;
     return new HandlerResult(null, execTime);

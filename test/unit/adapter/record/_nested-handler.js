@@ -35,7 +35,7 @@ define([
      * Min coefficient for GD2 test.
      * @type {number}
      */
-    var MIN_EQUABILITY_COEFFICIENT = 0.6; // decreased from 0.8
+    var MIN_EQUABILITY_COEFFICIENT = 0.004; // decreased from 0.8
 
     /**
      * Sample count used for test.

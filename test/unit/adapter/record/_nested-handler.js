@@ -100,14 +100,10 @@ define([
 
         it('compares func performance', function() {
 
-            var COUNT = 10;
-
-            var firstTime = getExecTimeSum('mul99_100', COUNT);
-            expect(Util.isNumeric(firstTime)).toBe(true);
-            var secondTime = getExecTimeSum('mul99_100__asm_js', COUNT);
-            expect(Util.isNumeric(secondTime)).toBe(true);
-
-            expect(firstTime).toBeGreaterThan(secondTime);
+            /*
+                deleted; reason - function call within a loop
+                makes optimization useless.
+             */
         });
     });
 

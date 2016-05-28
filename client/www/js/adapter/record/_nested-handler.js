@@ -1,4 +1,5 @@
 import { performance } from 'global/web-api';
+import { initAsmJsModule } from 'global/asm-js-wrapper';
 import { SUCCESS_CODE, getErrorData } from 'lib/error-code-manager';
 
 /**
@@ -36,8 +37,18 @@ export const handlerObj = Object.freeze({
         fn: mul99_100,
         format: FnFormat.SIMPLE,
     }),
-    mul99_100__asm_js: Object.freeze({})
+    mul99_100__asm_js: Object.freeze({
+
+        fn: mul99_100__asm_js,
+        format: FnFormat.ASM_JS,
+    }),
 });
+
+/**
+ * Reference on initialized module.
+ * @type {!Object<string, function>}
+ */
+let fast = initAsmJsModule(asmModule);
 
 /**
  * Executes 'elem * 99 / 100'.
@@ -55,6 +66,28 @@ function mul99_100(inputArr, outputArr) {
     for (let i = 0; i < len; ++i) {
 
         outputArr[i] = inputArr[i] * 0.99;
+    }
+    let execTime = performance.now() - startTime;
+    return new HandlerResult(null, execTime);
+}
+
+/**
+ * Executes 'elem * 99 / 100'.
+ * @param {!Float32Array} inputArr
+ * @param {!Float32Array} outputArr
+ * @return {!HandlerResult}
+ *
+ * --mutable--
+ */
+function mul99_100__asm_js(inputArr, outputArr) {
+
+    let len = inputArr.length;
+    let fn = fast.mul99_100elem;
+    let startTime = performance.now();
+
+    for (let i = 0; i < len; ++i) {
+
+        outputArr[i] = fn(inputArr[i]);
     }
     let execTime = performance.now() - startTime;
     return new HandlerResult(null, execTime);
@@ -79,4 +112,31 @@ function HandlerResult(err, execTime) {
         this.errorMsg = '';
     }
     this.execTime = execTime;
+}
+
+/**
+ * Single asm.js module.
+ * @param {!Object} stdlib
+ */
+function asmModule(stdlib) {
+    'use asm';
+
+    let fround = stdlib.Math.fround;
+
+    /**
+     * Executes 'elem * 99 / 100'.
+     * @param {number} elem
+     * @return {number}
+     */
+    function mul99_100elem(elem) {
+
+        elem = fround(elem);
+        let coefficient = fround(0.99);
+        return fround(elem * coefficient);
+    }
+
+    return {
+
+        mul99_100elem: mul99_100elem,
+    };
 }

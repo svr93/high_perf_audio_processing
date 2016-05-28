@@ -6,3 +6,7 @@ to the database (because check outside of Promise) -> #6
 2) activeTransactionSet existence check:
 In case of using system name as storageName transactionObj[storageName]
 value _always_ equivalent to 'true' boolean value -> #11
+
+3) [specification] LPCM data handler must use two arguments:
+inputArr and outputArr
+(see GD note from 28.05.16)

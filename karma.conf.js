@@ -75,7 +75,7 @@ module.exports = function(config) {
             {
                 pattern: 'client/www/js/global/asm-js-wrapper.js',
                 included: false,
-            }/*,
+            },
             {
                 pattern: 'client/www/js/adapter/record/_nested-handler.js',
                 included: false,
@@ -83,7 +83,7 @@ module.exports = function(config) {
             {
                 pattern: 'test/unit/adapter/record/_nested-handler.js',
                 included: false,
-            }*/
+            }
         ],
         preprocessors: {
 

@@ -132,7 +132,10 @@ define([
             fullTime += execTime;
             count++;
         }, intervalTime);
-        setTimeout(function() {
+        new Promise(function(resolve) {
+
+            setTimeout(resolve, TEST_TIME);
+        }).then(function() {
 
             clearInterval(intervalTimerId);
 
@@ -149,7 +152,11 @@ define([
             expect(equability).toBeGreaterThan(MIN_EQUABILITY_COEFFICIENT);
 
             done();
-        }, TEST_TIME);
+        }).catch(function(e) {
+
+            console.warn(e.message);
+            fail(e);
+        });
     }
 
     /**

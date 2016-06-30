@@ -56,12 +56,14 @@ IStorageAdapter.prototype.get = function(name, options) {};
 /**
  * Class with wrapped IndexedDB methods.
  * @param {string} storageName
+ * @param {string} collectionName
  * @constructor
  * @implements {IStorageAdapter}
  */
-function IndexedDBStorageAdapter(storageName) {
+function IndexedDBStorageAdapter(storageName, collectionName) {
 
     this._db = openedDBObj[storageName];
+    this._collectionName = collectionName;
 }
 
 /**
@@ -85,8 +87,9 @@ IndexedDBStorageAdapter.prototype.set = function fn(name, data, options) {
             errorMsg: checkRes
         });
     }
-    let transaction = this._db.transaction(['defaultStore'], 'readwrite');
-    let store = transaction.objectStore('defaultStore');
+    let collectionName = this._collectionName;
+    let transaction = this._db.transaction([collectionName], 'readwrite');
+    let store = transaction.objectStore(collectionName);
 
     let newStoreObj = { key: name, value: data };
     let req = null;
@@ -167,8 +170,9 @@ IndexedDBStorageAdapter.prototype.get = function fn(name, options) {
             errorMsg: checkRes
         });
     }
-    let transaction = this._db.transaction(['defaultStore'], 'readonly');
-    let store = transaction.objectStore('defaultStore');
+    let collectionName = this._collectionName;
+    let transaction = this._db.transaction([collectionName], 'readonly');
+    let store = transaction.objectStore(collectionName);
 
     let req = store.get(name);
 
@@ -260,7 +264,10 @@ let createAdapter = function fn(storageName, options) {
             errorMsg: checkRes
         });
     }
-    if (typeof storageName !== 'string' || storageName === '') {
+    let collectionName = options.collectionName;
+    if (typeof storageName !== 'string' || storageName === '' ||
+        ('collectionName' in options &&
+        (typeof collectionName !== 'string' || collectionName === ''))) {
 
         let errorMsg = 'INCORRECT_ARGUMENT';
         return Promise.resolve({
@@ -330,6 +337,8 @@ let createAdapter = function fn(storageName, options) {
 function getAdapter(storageName, options) {
 
     let db = null;
+    let collectionName = options.collectionName || 'defaultStore';
+    let version = null;
 
     commonPromise = commonPromise
         .then(res => {
@@ -345,21 +354,46 @@ function getAdapter(storageName, options) {
                     throw new Error('ALREADY_OPEN');
                 }
                 db = openedDBObj[storageName];
+                if (db.objectStoreNames.contains(collectionName)) {
+
+                    return false;
+                }
+                version = getNextVersion(db);
+                let promiseList = getTransactionDonePromiseList(storageName);
+
+                openedDBObj[storageName].close();
+                delete openedDBObj[storageName];
+                delete transactionObj[storageName];
+
+                return Promise.all(promiseList).then(() => true);
+            }
+            return true;
+        })
+        .then((needOpen) => {
+            if (!needOpen) {
+
                 return null;
             }
-            let openRequest = indexedDB.open(storageName);
+            let openRequest = null;
+            if (version) {
+
+                openRequest = indexedDB.open(storageName, version);
+            } else {
+
+                openRequest = indexedDB.open(storageName);
+            }
             return new Promise((resolve, reject) => {
 
                 /**
-                 * Need for create DB first time (and add 'defaultStore' then).
+                 * Need for create DB first time (and add collection then).
                  * @param {Event} evt
                  */
                 openRequest.onupgradeneeded = function(evt) {
 
                     db = evt.target.result;
-                    if (!db.objectStoreNames.contains('defaultStore')) {
+                    if (!db.objectStoreNames.contains(collectionName)) {
 
-                        db.createObjectStore('defaultStore', {
+                        db.createObjectStore(collectionName, {
 
                             keyPath: 'key'
                         });
@@ -394,16 +428,32 @@ function getAdapter(storageName, options) {
         })
         .then(() => {
 
+            if (!db.objectStoreNames.contains(collectionName)) {
+
+                return getAdapter(storageName, options);
+            }
             openedDBObj[storageName] = db;
             transactionObj[storageName] = new Set();
+            let adapter = new IndexedDBStorageAdapter(
+                storageName, collectionName);
             return {
 
-                adapter: new IndexedDBStorageAdapter(storageName),
+                adapter: adapter,
                 statusCode: SUCCESS_CODE,
                 errorMsg: ''
             };
         })
         .catch(commonErrorHandler);
+}
+
+/**
+ * Gets next db version.
+ * @param {IDBDatabase} db
+ * @return {number}
+ */
+function getNextVersion(db) {
+
+    return `${ db.version }` !== '' ? db.version + 1 : 2;
 }
 
 /**

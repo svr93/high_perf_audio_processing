@@ -237,6 +237,7 @@ let transactionObj = {};
  * @param {{
  *  rewrite: boolean=, False by default.
  *  useOpen: boolean=, False by default.
+ *  collectionName: string= "defaultStore" by default
  * }=} options
  * @return {Promise} Thenable object; resolution -
  * {{

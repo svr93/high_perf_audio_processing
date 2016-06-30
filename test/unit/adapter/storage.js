@@ -324,6 +324,7 @@ define(['adapter/storage'], function(Storage) {
 
             var TEST_COLL_NAME = 'baseCollection';
             var options = { useOpen: true, collectionName: TEST_COLL_NAME };
+            var adapter = null;
 
             Storage.createAdapter(TEST_DB_NAME, options)
                 .then(function(res) {
@@ -332,17 +333,18 @@ define(['adapter/storage'], function(Storage) {
                     var nameData = res.adapter._db.objectStoreNames;
                     console.log(nameData);
                     expect(nameData.contains(TEST_COLL_NAME)).toBe(true);
+                    adapter = res.adapter;
                     return res.adapter.set('_a', '_b');
                 })
                 .then(function(res) {
 
                     console.log(res);
-                    return res.adapter.get('_a');
+                    return adapter.get('_a');
                 })
                 .then(function(res) {
 
                     console.log(res);
-                    expect(res.data._a).toBe('_b');
+                    expect(res.data).toBe('_b');
                     done();
                 })
                 .catch(function(e) {

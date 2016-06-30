@@ -319,5 +319,37 @@ define(['adapter/storage'], function(Storage) {
                     fail(e);
                 });
         });
+
+        it('verifies another collection name using', function(done) {
+
+            var TEST_COLL_NAME = 'baseCollection';
+            var options = { useOpen: true, collectionName: TEST_COLL_NAME };
+
+            Storage.createAdapter(TEST_DB_NAME, options)
+                .then(function(res) {
+
+                    console.log(res);
+                    var nameData = res.adapter._db.objectStoreNames;
+                    console.log(nameData);
+                    expect(nameData.contains(TEST_COLL_NAME)).toBe(true);
+                    return res.adapter.set('_a', '_b');
+                })
+                .then(function(res) {
+
+                    console.log(res);
+                    return res.adapter.get('_a');
+                })
+                .then(function(res) {
+
+                    console.log(res);
+                    expect(res.data._a).toBe('_b');
+                    done();
+                })
+                .catch(function(e) {
+
+                    console.log(e.message);
+                    fail(e);
+                });
+        });
     });
 });
